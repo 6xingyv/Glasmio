@@ -292,6 +292,7 @@ fun rememberRasterizedBackdrop(source: LayerBackdrop): Backdrop {
         val listener = ViewTreeObserver.OnPreDrawListener {
             // Only cross-window drawing observes this state; the source stays independent.
             sourceFrame.intValue = ++frame
+            source.notifySourceRecorded()
             true
         }
         view.viewTreeObserver.addOnPreDrawListener(listener)

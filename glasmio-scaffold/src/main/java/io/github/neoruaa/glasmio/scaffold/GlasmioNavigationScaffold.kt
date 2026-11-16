@@ -604,7 +604,9 @@ private fun GlasmioNavigationHeader(
             .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal))
             .padding(horizontal = IosPageHorizontalPadding)
             .onGloballyPositioned { searchOrigin = it.positionInWindow() }) {
-            Box(Modifier.fillMaxWidth().height(GlasmioToolbarDefaults.Height)) {
+            BottomNavigationContact(backdrop = LocalGlassBackdrop.current,
+                modifier = Modifier.fillMaxWidth().height(GlasmioToolbarDefaults.Height)) {
+            Box(Modifier.fillMaxSize()) {
                 HeaderSide(displaySourceLeading, displayTargetLeading,
                     if (owner === source) displaySourceLeading else displayTargetLeading,
                     retainedLeading, progress, tracking,
@@ -619,6 +621,7 @@ private fun GlasmioNavigationHeader(
                     titles.publish(frame.fromEntryKey, false, source.trailing, overflowEnabled, old, density)
                     titles.publish(frame.toEntryKey, false, target.trailing, overflowEnabled, new, density)
                 }
+            }
             }
             searchGroups.forEach { group ->
                 key(group.search) { GlasmioHeaderSearchLayer(group, searchOrigin) }
@@ -822,6 +825,9 @@ private fun HeaderGroup(
     val searchOwnsSurface by remember(search) {
         derivedStateOf { search != null && (search.configuration.value.active || search.progress.value > 0f) }
     }
+    CompositionLocalProvider(LocalBottomControlContactMemberActive provides {
+        presence >= .999f && !searchOwnsSurface
+    }) {
     GlasmioToolbarActionHost(
         modifier = Modifier.testTag("GlasmioHeaderGroup:${fallback.key}")
             .onGloballyPositioned { coordinates -> search?.sourceBounds = coordinates.boundsInWindow() }
@@ -959,4 +965,5 @@ private fun HeaderGroup(
         }
     }
     }
+}
 }

@@ -90,6 +90,12 @@ fun LiquidMenuMorphSurface(
             GlassMaterialSource(NavigationMaterialRecipe.resolve(context.darkFraction, sourceMaterial)) else null
     }
     val source = rememberCrossWindowBackdrop(backdrop)
+    val pixelRevision = remember(source) { androidx.compose.runtime.mutableIntStateOf(0) }
+    val capturedPixelRevision = remember(source) { intArrayOf(-1) }
+    DisposableEffect(source) {
+        val stop = source.observeSourceChanges { pixelRevision.intValue++ }
+        onDispose { stop() }
+    }
     val renderer = rememberGlassMorphRenderer(
         source, active = true, blurRadius = NavigationGlassMaterial.RegularMedium.frostRadius,
         programs = shaderPrograms, materialPreset = NavigationGlassMaterial.RegularMedium, isDark = context.isDark,
@@ -184,6 +190,13 @@ fun LiquidMenuMorphSurface(
             .then(if (exportChildBackdrop) Modifier.layerBackdrop(childBackdrop).trackBackdropPosition(childBackdrop) else Modifier)
             .drawWithContent {
                 val host = coordinates ?: return@drawWithContent
+                // Read state in draw, so live playback invalidates this window without
+                // recomposing the menu or waiting for another pointer gesture.
+                val pixels = pixelRevision.intValue
+                if (capturedPixelRevision[0] != pixels) {
+                    renderer.invalidateRecording()
+                    capturedPixelRevision[0] = pixels
+                }
                 val frame = motion.frame
                 val sourceExtent = motion.sourceBounds.size.minDimension
                 val knownSourceMaterial = sourceNativeMaterial ?: standardSourceMaterial?.takeIf { sourceExtent > 0f }

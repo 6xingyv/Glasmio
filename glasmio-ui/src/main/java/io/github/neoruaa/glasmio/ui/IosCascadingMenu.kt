@@ -95,6 +95,7 @@ fun GlasmioCascadingMenu(
     expandFromAnchor: Alignment.Horizontal? = null,
     forceBelowAnchor: Boolean = false,
     morphFromAnchor: Boolean = true,
+    preferredWidth: Dp? = null,
     headerContentHeight: Dp = 0.dp,
     headerContent: (@Composable (execute: (() -> Unit) -> Unit) -> Unit)? = null,
     viewportBounds: Rect? = null,
@@ -121,7 +122,7 @@ fun GlasmioCascadingMenu(
     val itemHeights = remember(items, itemHeight) { items.map { menuItemHeight(itemHeight, it.title, it.subtitle) } }
     val textMeasurer = rememberTextMeasurer()
     val windowWidth = with(density) { LocalWindowInfo.current.containerSize.width.toDp() }
-    val menuWidth = if (headerActions.isEmpty()) {
+    val menuWidth = preferredWidth?.coerceAtMost((windowWidth - 24.dp).coerceAtLeast(1.dp)) ?: if (headerActions.isEmpty()) {
         val longestRowWidth = items.maxOfOrNull {
             textMeasurer.measure(it.title, style = IosTypography.body, maxLines = if ('\n' in it.title) 2 else 1).size.width
         } ?: 0
@@ -243,10 +244,11 @@ fun GlasmioCascadingMenu(
                         trailing = { MenuChevron(90f * p, if (childExpanded) expandedDescription else collapsedDescription) },
                         onClick = { childExpanded = !childExpanded },
                     )
+                    val childScroll = rememberScrollState()
                     Column(Modifier.weight(1f).graphicsLayer {
                         alpha = p
                         translationY = -separatorHeight.toPx() * (1f - p)
-                    }.verticalScroll(rememberScrollState())) {
+                    }.verticalScroll(childScroll, enabled = childScroll.maxValue > 0, overscrollEffect = null)) {
                         GlasmioMenuSeparator(height = separatorHeight, horizontalInset = 12.dp)
                         selected.children.forEach { item ->
                             if (item.separatorBefore) {
@@ -270,7 +272,8 @@ fun GlasmioCascadingMenu(
         },
         anchor = { Spacer(Modifier.size(1.dp)) },
     ) { childBackdrop, _ ->
-        Column(Modifier.fillMaxSize().verticalScroll(menuScroll)) {
+        Column(Modifier.fillMaxSize().verticalScroll(menuScroll,
+            enabled = menuScroll.maxValue > 0, overscrollEffect = null)) {
             if (headerContent != null) {
                 Column(Modifier.graphicsLayer {
                     alpha = 1f - 0.58f * child.value.coerceIn(0f, 1f)
