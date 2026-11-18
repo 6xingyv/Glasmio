@@ -17,7 +17,7 @@ kotlin {
         compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21) }
     }
     jvm("desktop")
-    listOf(iosArm64(), iosSimulatorArm64(), iosX64()).forEach { target ->
+    listOf(iosArm64(), iosSimulatorArm64()).forEach { target ->
         target.binaries.framework {
             baseName = "GlasmioComponents"
             isStatic = true

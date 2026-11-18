@@ -112,3 +112,5 @@ The previous Desktop/iOS `RoundedCornerShape` substitutes were removed. Core now
 uses `com.mocharealm.gaze:capsule:2.1.1-patch2`, a multiplatform G2 Capsule
 implementation, from `commonMain` on Android, Desktop and iOS. The host theme
 always resolves corner geometry from the same library and numeric radii.
+
+`gaze-capsule` currently publishes iOS device and Apple Silicon simulator targets but not Intel `iosX64`. Glasmio's shared libraries therefore use `iosArm64` and `iosSimulatorArm64` for binary compatibility; no unavailable Intel simulator variant is declared.
