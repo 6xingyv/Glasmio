@@ -3,7 +3,7 @@ package io.github.neoruaa.glasmio.ui
 import androidx.compose.ui.geometry.Rect
 
 /** Selects the usable side of an anchor, then keeps the overlay inside the safe viewport. */
-internal fun editingOverlayTop(
+fun editingOverlayTop(
     anchor: Rect,
     viewport: Rect,
     height: Float,

@@ -1,7 +1,5 @@
 package io.github.neoruaa.glasmio.glass
 
-import io.github.neoruaa.glasmio.core.*
-import io.github.neoruaa.glasmio.icons.*
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.geometry.Size

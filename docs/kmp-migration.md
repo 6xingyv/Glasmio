@@ -68,3 +68,5 @@ previews, these render genuine shared Compose UI on Android, Desktop, and iOS. A
 `glasmio-ui` re-exports the component dependency so previously imported package names
 and call sites remain intact. Desktop preview draws the shared controls. Platform-specific
 backdrop refraction and native overlays are outside this module.
+
+The indicator deform/anchor geometry is now portable in `glasmio-optics`, and text-selection editing overlay placement lives in `glasmio-components`. The Android glass module exports optics transitively as an API dependency so its public material and indicator types stay accessible to existing UI consumers.
