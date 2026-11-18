@@ -59,3 +59,12 @@ Build with `./gradlew :desktop-sample:compileKotlin` and launch via
 `./gradlew :desktop-sample:run` on a workstation with a graphical desktop.
 It displays colors, typography, material profile constants and numeric optical
 samples, **not** a simulated or faithful Desktop Liquid Glass renderer.
+
+## Real cross-platform controls
+
+`glasmio-components` now owns the original ChatKit-style message bubble shape and
+`GlasmioMessageBubble` compositor plus the SF-sidebar toggle vector; unlike numerical
+previews, these render genuine shared Compose UI on Android, Desktop, and iOS. Android
+`glasmio-ui` re-exports the component dependency so previously imported package names
+and call sites remain intact. Desktop preview draws the shared controls. Platform-specific
+backdrop refraction and native overlays are outside this module.
