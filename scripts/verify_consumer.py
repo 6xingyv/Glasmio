@@ -22,7 +22,7 @@ dependencyResolutionManagement {
 rootProject.name = "GlasmioConsumer"
 ''')
 (folder / 'build.gradle.kts').write_text('''plugins {
-    id("com.android.application") version "9.4.1"
+    id("com.android.application") version "9.3.1"
     id("org.jetbrains.kotlin.plugin.compose") version "2.4.21"
 }
 android {

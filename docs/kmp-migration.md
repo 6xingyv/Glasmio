@@ -47,3 +47,7 @@ The native control's material presets and geometry profiles now also live in `gl
 ## Shared motion
 
 `glasmio-motion` now contains the original iOS alert, context menu, header, sheet drag, and navigation transition motion solvers. It preserves their Kotlin packages for Android call sites; the Android UI and Scaffold modules depend on it while Desktop/iOS can run its motion primitives without the Android UI layers. Unit tests verify endpoint behavior. The visual UI is still Android-only.
+
+## CI and release safety
+
+The Android consumer verifier now uses AGP 9.3.1, consistent with the build. CI executes core Android host tests in addition to Desktop/iOS compilation. The old release bundle logic recognizes only six Android AARs, so tagged releases are intentionally blocked before signing or upload until publication artifacts and legal notices can be verified for all KMP variants. **Do not bypass this guard to publish.**
