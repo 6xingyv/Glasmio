@@ -26,3 +26,10 @@ The new `glasmio-symbols` module also publishes metadata and platform artifacts.
 3. Introduce platform font and icon implementations.
 4. Port UI/scaffold and their navigation/overlay dependencies.
 5. Add Apple targets, platform rendering, tests, and target-aware Maven Central release.
+
+## Toolchain compatibility
+
+Kotlin 2.4.21 is tested with AGP through 9.3.1, not the previous AGP 9.4.1.
+The build now pins AGP 9.3.1 (which supports SDK 37), together with Gradle 9.6.
+The core and symbol catalog additionally declare iosArm64, iosSimulatorArm64 and iosX64;
+use the macOS CI job for native compilation. Android and Desktop builds remain mandatory.

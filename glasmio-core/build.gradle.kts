@@ -20,6 +20,9 @@ kotlin {
         }
     }
     jvm("desktop")
+    iosArm64()
+    iosSimulatorArm64()
+    iosX64()
     jvmToolchain(21)
 
     sourceSets {
