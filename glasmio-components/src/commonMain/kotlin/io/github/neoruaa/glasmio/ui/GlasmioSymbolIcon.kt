@@ -11,7 +11,7 @@ import io.github.neoruaa.glasmio.core.LocalGlassColors
  * System symbol renderer shared across Android, Desktop and iOS.
  *
  * Android delegates to the existing SfIcon pipeline; iOS uses UIKit SF Symbols;
- * Desktop supplies Material vector fallbacks without redistributing Apple fonts.
+ * Desktop uses the same Glasmio vector glyphs as Android without redistributing Apple fonts.
  * Symbol names are taken from SfSymbolCatalog, which may include symbols absent
  * from older iOS versions.
  */

@@ -10,7 +10,6 @@ kotlin {
 
 dependencies {
     implementation(compose.desktop.currentOs)
-    implementation(compose.material3)
     implementation(project(":glasmio-core"))
     implementation(project(":glasmio-components"))
     implementation(project(":glasmio-symbols"))

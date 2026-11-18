@@ -31,13 +31,9 @@ kotlin {
             api(compose.runtime)
             api(compose.foundation)
             api(compose.ui)
-            api(compose.material3)
         }
         androidMain.dependencies {
             implementation(project(":glasmio-icons"))
-        }
-        desktopMain.dependencies {
-            implementation(compose.materialIconsExtended)
         }
         commonTest.dependencies { implementation(kotlin("test")) }
     }
