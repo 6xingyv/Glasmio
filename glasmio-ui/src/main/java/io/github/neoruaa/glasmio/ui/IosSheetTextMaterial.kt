@@ -1,6 +1,6 @@
 package io.github.neoruaa.glasmio.ui
 
-import androidx.compose.material3.Text
+import io.github.neoruaa.glasmio.core.GlasmioText as Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

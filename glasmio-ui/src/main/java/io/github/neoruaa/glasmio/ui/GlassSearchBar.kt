@@ -153,7 +153,7 @@ fun GlasmioSearchBar(
                     decorationBox = { innerTextField ->
                         Box(contentAlignment = Alignment.CenterStart) {
                             if (query.text.isEmpty()) {
-                                androidx.compose.material3.Text(
+                                io.github.neoruaa.glasmio.core.GlasmioText(
                                     text = placeholder,
                                     style = IosTypography.body,
                                     color = colors.tertiaryContent,

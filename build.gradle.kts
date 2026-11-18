@@ -5,8 +5,12 @@ import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.plugins.signing.SigningExtension
 
 plugins {
-    id("com.android.library") version "9.4.1" apply false
-    id("com.android.application") version "9.4.1" apply false
+    id("com.android.library") version "9.3.1" apply false
+    id("com.android.application") version "9.3.1" apply false
+    id("com.android.kotlin.multiplatform.library") version "9.3.1" apply false
+    id("org.jetbrains.kotlin.multiplatform") version "2.4.21" apply false
+    id("org.jetbrains.kotlin.jvm") version "2.4.21" apply false
+    id("org.jetbrains.compose") version "1.12.2" apply false
     id("org.jetbrains.kotlin.plugin.compose") version "2.4.21" apply false
 }
 abstract class PrepareLegalResources : DefaultTask() {
@@ -96,5 +100,38 @@ subprojects {
             }
         }
 
+    }
+}
+
+
+// Fail even if a third-party dependency accidentally reintroduces Material at
+// compilation or runtime. Direct source imports are checked separately in CI.
+tasks.register("verifyNoMaterialDependencies") {
+    group = "verification"
+    description = "Verify Android and Desktop compile/runtime graphs contain no Material Design artifacts"
+    doLast {
+        val forbidden = mutableListOf<String>()
+        allprojects.forEach { dependencyProject ->
+            dependencyProject.configurations.filter { configuration ->
+                configuration.isCanBeResolved &&
+                    configuration.name.endsWith("Classpath", ignoreCase = true) &&
+                    listOf("debug", "release", "android", "desktop").any { prefix ->
+                        configuration.name.startsWith(prefix, ignoreCase = true)
+                    }
+            }.forEach { configuration ->
+                configuration.incoming.resolutionResult.allComponents.forEach { component ->
+                    val module = component.moduleVersion ?: return@forEach
+                    if (module.group == "androidx.compose.material" ||
+                        module.group == "androidx.compose.material3" ||
+                        module.group.startsWith("org.jetbrains.compose.material")
+                    ) {
+                        forbidden += "${dependencyProject.path}:${configuration.name}: ${module.group}:${module.name}:${module.version}"
+                    }
+                }
+            }
+        }
+        check(forbidden.isEmpty()) {
+            "Material Design dependencies are prohibited:\n" + forbidden.distinct().sorted().joinToString("\n")
+        }
     }
 }

@@ -6,63 +6,66 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.rememberSplineBasedDecay
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.TopAppBarScrollBehavior
-import androidx.compose.material3.TopAppBarState
-import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 
-@OptIn(ExperimentalMaterial3Api::class)
+/** Glasmio-owned header collapse state; independent of Material app bar components. */
+class GlasmioAppBarState(
+    initialHeightOffsetLimit: Float = 0f,
+    initialHeightOffset: Float = 0f,
+    initialContentOffset: Float = 0f,
+) {
+    var heightOffsetLimit by mutableFloatStateOf(initialHeightOffsetLimit)
+    var heightOffset by mutableFloatStateOf(initialHeightOffset)
+    var contentOffset by mutableFloatStateOf(initialContentOffset)
+    val collapsedFraction: Float
+        get() = if (heightOffsetLimit < 0f) (heightOffset / heightOffsetLimit).coerceIn(0f, 1f) else 0f
+}
+
+@Composable
+fun rememberGlasmioAppBarState(): GlasmioAppBarState = remember { GlasmioAppBarState() }
+
 @Composable
 fun rememberGlasmioAppBarScrollBehavior(
-    state: TopAppBarState = rememberTopAppBarState(),
+    state: GlasmioAppBarState = rememberGlasmioAppBarState(),
     canScroll: () -> Boolean = { true },
     snapAnimationSpec: AnimationSpec<Float>? = spring(stiffness = Spring.StiffnessMediumLow),
     flingAnimationSpec: DecayAnimationSpec<Float>? = rememberSplineBasedDecay(),
-): TopAppBarScrollBehavior =
-    GlasmioAppBarScrollBehavior(
-        state = state,
-        snapAnimationSpec = snapAnimationSpec,
-        flingAnimationSpec = flingAnimationSpec,
-        canScroll = canScroll
-    )
+): GlasmioAppBarScrollBehavior = remember(state, snapAnimationSpec, flingAnimationSpec, canScroll) {
+    GlasmioAppBarScrollBehavior(state, snapAnimationSpec, flingAnimationSpec, canScroll)
+}
 
-
-@ExperimentalMaterial3Api
-class GlasmioAppBarScrollBehavior constructor(
-    override val state: TopAppBarState,
-    override val snapAnimationSpec: AnimationSpec<Float>?,
-    override val flingAnimationSpec: DecayAnimationSpec<Float>?,
+class GlasmioAppBarScrollBehavior(
+    val state: GlasmioAppBarState,
+    val snapAnimationSpec: AnimationSpec<Float>?,
+    val flingAnimationSpec: DecayAnimationSpec<Float>?,
     val canScroll: () -> Boolean = { true },
-) : TopAppBarScrollBehavior {
-    override val isPinned: Boolean = true
-    override var nestedScrollConnection = object : NestedScrollConnection {
+) {
+    val isPinned: Boolean = true
+    val nestedScrollConnection: NestedScrollConnection = object : NestedScrollConnection {
         override fun onPostScroll(consumed: Offset, available: Offset, source: NestedScrollSource): Offset {
             if (!canScroll()) return Offset.Zero
             state.contentOffset += consumed.y
-            if (state.heightOffset == 0f || state.heightOffset == state.heightOffsetLimit) {
-                if (consumed.y == 0f && available.y > 0f) {
-                    // Reset the total content offset to zero when scrolling all the way down.
-                    // This will eliminate some float precision inaccuracies.
-                    state.contentOffset = 0f
-                }
+            state.heightOffset = (state.heightOffset + consumed.y)
+                .coerceIn(state.heightOffsetLimit.coerceAtMost(0f), 0f)
+            if (consumed.y == 0f && available.y > 0f &&
+                (state.heightOffset == 0f || state.heightOffset == state.heightOffsetLimit)) {
+                state.contentOffset = 0f
             }
-            state.heightOffset += consumed.y
             return Offset.Zero
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-suspend fun TopAppBarState.resetHeightOffset() {
+suspend fun GlasmioAppBarState.resetHeightOffset() {
     if (heightOffset != 0f) {
-        animate(
-            initialValue = heightOffset,
-            targetValue = 0f
-        ) { value, _ ->
+        animate(initialValue = heightOffset, targetValue = 0f) { value, _ ->
             heightOffset = value
         }
     }
