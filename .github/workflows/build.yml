@@ -35,6 +35,8 @@ jobs:
         run: python3 scripts/check_kmp_boundaries.py
       - name: Check SF Symbols catalog
         run: python3 scripts/generate_sf_symbol_catalog.py --check
+      - name: Verify resolved Android and Desktop dependencies contain no Material
+        run: ./gradlew verifyNoMaterialDependencies --console=plain
       - name: Enforce independent library boundary
         run: '! rg "com\.ljyh\.mei" glasmio-*/src'
       - run: ./gradlew :glasmio-core:testAndroidHostTest testDebugUnitTest lintDebug :sample:assembleDebug :sample:assembleDebugAndroidTest publishAllPublicationsToStagingRepository --console=plain

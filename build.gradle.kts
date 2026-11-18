@@ -102,3 +102,36 @@ subprojects {
 
     }
 }
+
+
+// Fail even if a third-party dependency accidentally reintroduces Material at
+// compilation or runtime. Direct source imports are checked separately in CI.
+tasks.register("verifyNoMaterialDependencies") {
+    group = "verification"
+    description = "Verify Android and Desktop compile/runtime graphs contain no Material Design artifacts"
+    doLast {
+        val forbidden = mutableListOf<String>()
+        allprojects.forEach { dependencyProject ->
+            dependencyProject.configurations.filter { configuration ->
+                configuration.isCanBeResolved &&
+                    configuration.name.endsWith("Classpath", ignoreCase = true) &&
+                    listOf("debug", "release", "android", "desktop").any { prefix ->
+                        configuration.name.startsWith(prefix, ignoreCase = true)
+                    }
+            }.forEach { configuration ->
+                configuration.incoming.resolutionResult.allComponents.forEach { component ->
+                    val module = component.moduleVersion ?: return@forEach
+                    if (module.group == "androidx.compose.material" ||
+                        module.group == "androidx.compose.material3" ||
+                        module.group.startsWith("org.jetbrains.compose.material")
+                    ) {
+                        forbidden += "${dependencyProject.path}:${configuration.name}: ${module.group}:${module.name}:${module.version}"
+                    }
+                }
+            }
+        }
+        check(forbidden.isEmpty()) {
+            "Material Design dependencies are prohibited:\n" + forbidden.distinct().sorted().joinToString("\n")
+        }
+    }
+}

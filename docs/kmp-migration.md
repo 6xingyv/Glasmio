@@ -114,3 +114,10 @@ implementation, from `commonMain` on Android, Desktop and iOS. The host theme
 always resolves corner geometry from the same library and numeric radii.
 
 `gaze-capsule` currently publishes iOS device and Apple Silicon simulator targets but not Intel `iosX64`. Glasmio's shared libraries therefore use `iosArm64` and `iosSimulatorArm64` for binary compatibility; no unavailable Intel simulator variant is declared.
+
+The root task `verifyNoMaterialDependencies` now resolves Android and Desktop
+compile/runtime dependency graphs and rejects any transitive `androidx.compose.material`,
+`androidx.compose.material3` or `org.jetbrains.compose.material*` artifacts. Together
+with `scripts/check_no_material.py`, this prevents both source imports and indirect
+UI toolkit dependencies from silently returning. This check requires a real Gradle
+resolution on CI and is not yet reported as passing.
