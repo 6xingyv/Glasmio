@@ -4,7 +4,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 /** Native control/panel measurements expressed in points before host-density conversion. */
-internal data class NavigationGlassGeometryProfile(
+data class NavigationGlassGeometryProfile(
     val blurRadius: Float,
     val innerHeight: Float,
     val innerAmount: Float,
@@ -20,7 +20,7 @@ internal data class NavigationGlassGeometryProfile(
  * Bounded interpolation through the measured 50, 150 and 200 pt UIKit/SwiftUI specimens.
  * This is a portable calibration, not a claim that these expressions are Apple's private code.
  */
-internal fun navigationGlassGeometryProfile(
+fun navigationGlassGeometryProfile(
     minimumDimension: Float,
     material: NavigationGlassMaterial? = null,
 ): NavigationGlassGeometryProfile {
@@ -43,13 +43,13 @@ internal fun navigationGlassGeometryProfile(
 }
 
 /** The native minimum-distance size gate corresponds to half the shorter rectangular edge. */
-internal fun navigationGlassUsesLargeFace(minimumDimension: Float): Boolean = minimumDimension > 128f
+fun navigationGlassUsesLargeFace(minimumDimension: Float): Boolean = minimumDimension > 128f
 
-internal fun navigationGlassSizeProgress(minimumDimension: Float): Float =
+fun navigationGlassSizeProgress(minimumDimension: Float): Float =
     ((minimumDimension.takeIf { it.isFinite() } ?: 50f) - 64f).div(96f).coerceIn(0f, 1f)
 
 /** Morph interpolation is separate from the measured endpoint profile construction. */
-internal fun navigationGlassMorphProfile(
+fun navigationGlassMorphProfile(
     minimumDimension: Float,
     source: NavigationGlassMaterial?,
     target: NavigationGlassMaterial?,
@@ -66,5 +66,5 @@ internal fun navigationGlassMorphProfile(
 }
 
 /** Scalar policy used by the capture node without allocating a profile on each frame. */
-internal fun navigationGlassCaptureScale(minimumDimension: Float): Float =
+fun navigationGlassCaptureScale(minimumDimension: Float): Float =
     if (minimumDimension.isFinite() && minimumDimension > 0f) (50f / minimumDimension).coerceIn(.25f, .5f) else .5f

@@ -7,7 +7,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Immutable
-internal data class NavigationGlassFill(val color: Color, val blendMode: BlendMode)
+data class NavigationGlassFill(val color: Color, val blendMode: BlendMode)
 
 /**
  * Semantic material names and measured iOS 27 optical defaults.
@@ -30,7 +30,7 @@ enum class NavigationGlassMaterial(
 
     val shadowOffsetY: Dp get() = 8.dp
 
-    internal fun fills(isDark: Boolean): List<NavigationGlassFill> = when (this) {
+    fun fills(isDark: Boolean): List<NavigationGlassFill> = when (this) {
         RegularSmall -> if (isDark) SmallDark else SmallLight
         RegularMedium, RegularLarge -> if (isDark) MediumLargeDark else MediumLargeLight
         Clear -> ClearFills

@@ -41,3 +41,5 @@ shader source plus a CPU reference scalar transfer, with cross-platform tests.
 Android `glasmio-glass` consumes it as an implementation dependency and continues
 using the exact existing AGSL/RenderEffect/JNI path. **Shader source sharing is not
 GPU backend portability**: Desktop and iOS still need actual Skia/Metal renderers.
+
+The native control's material presets and geometry profiles now also live in `glasmio-optics/commonMain`. These maintain the original package names and computed parameters, while Android owns the actual material rendering.

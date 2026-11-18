@@ -3,6 +3,8 @@ import org.gradle.api.publish.maven.MavenPublication
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("com.android.kotlin.multiplatform.library")
+    id("org.jetbrains.compose")
+    id("org.jetbrains.kotlin.plugin.compose")
     id("maven-publish")
     id("signing")
 }
@@ -21,6 +23,10 @@ kotlin {
     jvmToolchain(21)
 
     sourceSets {
+        commonMain.dependencies {
+            api(compose.runtime)
+            api(compose.ui)
+        }
         commonTest.dependencies { implementation(kotlin("test")) }
     }
 }
