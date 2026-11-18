@@ -72,3 +72,13 @@ backdrop refraction and native overlays are outside this module.
 The indicator deform/anchor geometry is now portable in `glasmio-optics`, and text-selection editing overlay placement lives in `glasmio-components`. The Android glass module exports optics transitively as an API dependency so its public material and indicator types stay accessible to existing UI consumers.
 
 `LiquidMenuMorphMotion` (geometry envelopes, spring integration and portal timing) has also moved intact into `glasmio-motion/commonMain`. Android's `LiquidMenuMorphSurface` retains its original renderer but now reads frames and source bounds from that shared state machine; Desktop and iOS can animate the same model. This migration does not implement offscreen backdrop capture or optical compositing outside Android.
+
+## UIKit/SwiftUI iOS preview
+
+`glasmio-components` now builds a static `GlasmioComponents` framework and exposes
+`GlasmioComponentsViewController()` through Kotlin/Native. The controller renders
+actual `commonMain` message bubbles, themes, text and sidebar vector inside a
+`ComposeUIViewController`. Embed it via `ios-sample/GlasmioContentView.swift`
+in an Xcode app target. To link a simulator binary on macOS run
+`./gradlew :glasmio-components:linkDebugFrameworkIosSimulatorArm64`.
+This is a functional shared-UI preview and **not** an iOS glass backdrop renderer.
