@@ -75,7 +75,7 @@ object IosTypography {
     val largeTitle: TextStyle
         @Composable
         @ReadOnlyComposable
-        get() = LocalGlasmioTextStyles.current.largeTitle
+        get() = LocalGlasmioTextStyles.current[IosTextStyle.LargeTitle, IosTextVariant.Emphasized]
     val title1: TextStyle
         @Composable
         @ReadOnlyComposable
@@ -83,7 +83,7 @@ object IosTypography {
     val title2: TextStyle
         @Composable
         @ReadOnlyComposable
-        get() = LocalGlasmioTextStyles.current.title2
+        get() = LocalGlasmioTextStyles.current[IosTextStyle.Title2, IosTextVariant.Emphasized]
     val title3: TextStyle
         @Composable
         @ReadOnlyComposable
