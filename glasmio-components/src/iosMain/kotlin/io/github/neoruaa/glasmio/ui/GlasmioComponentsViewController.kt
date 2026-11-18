@@ -39,6 +39,7 @@ fun GlasmioComponentsViewController(): UIViewController = ComposeUIViewControlle
             ) {
                 Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     GlasmioSidebarToggleIcon()
+                    GlasmioSymbolIcon("house.fill", "Home")
                     Text("Glasmio", style = IosTypography.largeTitle)
                 }
                 Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {

@@ -33,6 +33,7 @@ import io.github.neoruaa.glasmio.glass.render.optics.GlassOptics
 import io.github.neoruaa.glasmio.icons.SfSymbolCatalog
 import io.github.neoruaa.glasmio.ui.GlasmioMessageBubble
 import io.github.neoruaa.glasmio.ui.GlasmioSidebarToggleIcon
+import io.github.neoruaa.glasmio.ui.GlasmioSymbolIcon
 
 /** A buildable Desktop consumer of the portable modules, NOT a Liquid Glass renderer. */
 fun main() = application {
@@ -46,6 +47,7 @@ fun main() = application {
                     Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                         GlasmioSidebarToggleIcon()
                         Text("Glasmio", style = IosTypography.largeTitle)
+                        GlasmioSymbolIcon("house.fill", "Home")
                     }
                     Text("Compose Multiplatform foundation: shared tokens, SF Symbols, motion and optics.")
                     Card(shape = shape) {

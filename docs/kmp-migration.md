@@ -86,3 +86,12 @@ This is a functional shared-UI preview and **not** an iOS glass backdrop rendere
 The macOS runner is now `macos-26` with Xcode 26.4.1 pinned for Kotlin 2.4.21 compatibility, avoiding the older Xcode 16 toolchain on `macos-15`. CI also statically checks that Kotlin `commonMain` files do not import Android or Java platform APIs.
 
 The portable native supercircle SDF shader source is now in `glasmio-optics/commonMain` as `NativeGlassSdfFunctions`. Android `GlassSdfShader` continues to compose its original source and material uniforms; no native GPU behavior is rewritten. The JNI-backed Gaussian contour cache stays in the Android renderer until a platform-independent release contract exists.
+
+## Portable system symbols
+
+`GlasmioSymbolIcon` is a shared Compose API backed by the original Android `SfIcon`,
+native UIKit `UIImage.systemImageNamed` on iOS, and explicit Material icon fallbacks
+on Desktop. Native iOS icons require no bundled SF font and preserve OS availability;
+unknown or unavailable symbols use an accessible fallback. Desktop vector fallbacks
+cover common names only and are not pixel-identical to SF Symbols. The original Android
+icon package and its optional host-provided font remain unchanged.
