@@ -95,3 +95,13 @@ on Desktop. Native iOS icons require no bundled SF font and preserve OS availabi
 unknown or unavailable symbols use an accessible fallback. Desktop vector fallbacks
 cover common names only and are not pixel-identical to SF Symbols. The original Android
 icon package and its optional host-provided font remain unchanged.
+
+## Material Design exclusion (Android + Desktop + iOS)
+
+The core theme and shared controls no longer use Material 3 primitives. App-specific
+text uses Glasmio's `GlasmioText`, `GlasmioProvideTextStyle`, `LocalGlasmioContentColor`
+and semantic `GlasmioTextStyles`; Desktop and iOS demonstrate shared native panels,
+buttons and UIKit-sized toggles. Android still uses the richer native glass controls.
+No Material icon packs or fonts are bundled: identical Glasmio vector fallback paths
+serve Android (when no host font is supplied) and Desktop. The GPU parity work is
+separate; a non-glass panel is not claimed to be an optical glass equivalent.
