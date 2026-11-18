@@ -34,11 +34,7 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.material3.Text
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
-import androidx.compose.material3.pulltorefresh.pullToRefresh
-import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
+import io.github.neoruaa.glasmio.core.GlasmioText as Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.saveable.listSaver
@@ -1278,7 +1274,6 @@ private fun NavigationDemo(layout: SamplePageLayout) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ListDemo() {
     var reordered by remember { mutableStateOf(listOf("First", "Second", "Third")) }
@@ -1308,7 +1303,7 @@ private fun ListDemo() {
     }
     val listState = rememberLazyListState()
     val gridState = rememberLazyGridState()
-    val refreshState = rememberPullToRefreshState()
+    val refreshState = rememberGlasmioPullToRefreshState()
     val collapseProgress = if (grid) rememberGlasmioHeaderCollapse(gridState) else rememberGlasmioHeaderCollapse(listState)
     val edgeProgress = if (grid) rememberGlasmioHeaderScrollEdge(gridState) else rememberGlasmioHeaderScrollEdge(listState)
     val headerEntry = LocalSampleHeaderEntry.current
@@ -1332,7 +1327,7 @@ private fun ListDemo() {
         topBarBlurProgress = edgeProgress,
     ) { padding ->
         Box(
-            Modifier.fillMaxSize().pullToRefresh(
+            Modifier.fillMaxSize().glasmioPullToRefresh(
                 isRefreshing = refreshing,
                 onRefresh = refresh,
                 state = refreshState,
@@ -1471,7 +1466,7 @@ private fun ListDemo() {
                     }
                 }
             }
-            PullToRefreshDefaults.Indicator(
+            GlasmioPullToRefreshIndicator(
                 isRefreshing = refreshing,
                 state = refreshState,
                 modifier = Modifier.align(Alignment.TopCenter).padding(top = padding.calculateTopPadding()),
