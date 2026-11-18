@@ -23,16 +23,15 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.isUnspecified
 import androidx.compose.ui.unit.dp
-import com.kyant.capsule.ContinuousRoundedRectangle
 
 /** Every rounded surface uses the same continuous curvature, including Material fallbacks. */
 @Immutable
 data class GlasmioShapes(
-    val extraSmall: CornerBasedShape = ContinuousRoundedRectangle(8.dp),
-    val small: CornerBasedShape = ContinuousRoundedRectangle(16.dp),
-    val medium: CornerBasedShape = ContinuousRoundedRectangle(26.dp),
-    val large: CornerBasedShape = ContinuousRoundedRectangle(38.dp),
-    val extraLarge: CornerBasedShape = ContinuousRoundedRectangle(44.dp),
+    val extraSmall: CornerBasedShape = glasmioContinuousRoundedRectangle(8.dp),
+    val small: CornerBasedShape = glasmioContinuousRoundedRectangle(16.dp),
+    val medium: CornerBasedShape = glasmioContinuousRoundedRectangle(26.dp),
+    val large: CornerBasedShape = glasmioContinuousRoundedRectangle(38.dp),
+    val extraLarge: CornerBasedShape = glasmioContinuousRoundedRectangle(44.dp),
 ) {
     fun materialShapes() = Shapes(extraSmall, small, medium, large, extraLarge)
 }

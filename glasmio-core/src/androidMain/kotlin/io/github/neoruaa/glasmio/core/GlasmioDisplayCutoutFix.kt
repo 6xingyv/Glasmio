@@ -26,7 +26,7 @@ import java.util.WeakHashMap
  * cutout bounds, which are merged into both regular and animated inset dispatches.
  */
 @Composable
-fun ProvideGlasmioDisplayCutoutFix() {
+actual fun ProvideGlasmioDisplayCutoutFix() {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R || !LocalGlasmioDisplayCutoutFixEnabled.current) {
         return
     }
