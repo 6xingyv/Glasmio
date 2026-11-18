@@ -35,7 +35,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.Text
-import androidx.compose.material3.Typography
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
 import androidx.compose.material3.pulltorefresh.pullToRefresh
@@ -120,7 +119,7 @@ import kotlin.math.roundToInt
 
 private data class SampleAssets(
     val symbolTypeface: Typeface?,
-    val typography: Typography,
+    val typography: GlasmioTextStyles,
     val lightWallpaper: ImageBitmap,
     val darkWallpaper: ImageBitmap,
 )
@@ -187,13 +186,9 @@ class MainActivity : ComponentActivity() {
                 value = withContext(Dispatchers.IO) {
                     val cachedAssets = SampleAssetCache.load(context)
                     val typography = cachedAssets.typography
-                    listOf(
-                        typography.displayLarge, typography.displayMedium, typography.displaySmall,
-                        typography.headlineLarge, typography.headlineMedium, typography.headlineSmall,
-                        typography.titleLarge, typography.titleMedium, typography.titleSmall,
-                        typography.bodyLarge, typography.bodyMedium, typography.bodySmall,
-                        typography.labelLarge, typography.labelMedium, typography.labelSmall,
-                    ).mapNotNull { it.fontFamily }.distinct().forEach { fontResolver.preload(it) }
+                    IosTextStyle.entries.flatMap { role ->
+                        role.variants.mapNotNull { variant -> typography[role, variant].fontFamily }
+                    }.distinct().forEach { fontResolver.preload(it) }
                     cachedAssets
                 }
             }
@@ -261,7 +256,7 @@ private object SampleFontLoader : AndroidFont.TypefaceLoader {
 }
 
 /** Compose sees real weight entries; their Typefaces clone the shared native Font data. */
-private fun sampleTypography(baseFont: NativeFont, italicFont: NativeFont?): Typography {
+private fun sampleTypography(baseFont: NativeFont, italicFont: NativeFont?): GlasmioTextStyles {
     val base = glasmioTypography()
     val families = mutableMapOf<Float, FontFamily>()
     val typefaces = mutableMapOf<Triple<Float, Float, FontStyle>, Typeface>()
@@ -298,23 +293,7 @@ private fun sampleTypography(baseFont: NativeFont, italicFont: NativeFont?): Typ
         }
         return style.copy(fontFamily = family)
     }
-    return base.copy(
-        displayLarge = resolve(base.displayLarge),
-        displayMedium = resolve(base.displayMedium),
-        displaySmall = resolve(base.displaySmall),
-        headlineLarge = resolve(base.headlineLarge),
-        headlineMedium = resolve(base.headlineMedium),
-        headlineSmall = resolve(base.headlineSmall),
-        titleLarge = resolve(base.titleLarge),
-        titleMedium = resolve(base.titleMedium),
-        titleSmall = resolve(base.titleSmall),
-        bodyLarge = resolve(base.bodyLarge),
-        bodyMedium = resolve(base.bodyMedium),
-        bodySmall = resolve(base.bodySmall),
-        labelLarge = resolve(base.labelLarge),
-        labelMedium = resolve(base.labelMedium),
-        labelSmall = resolve(base.labelSmall),
-    )
+    return base.mapStyles { _, _, style -> resolve(style) }
 }
 
 @Composable

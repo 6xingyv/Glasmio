@@ -1,6 +1,5 @@
 package io.github.neoruaa.glasmio.core
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
@@ -72,11 +71,11 @@ object IosTypography {
     val fontFamily: FontFamily
         @Composable
         @ReadOnlyComposable
-        get() = MaterialTheme.typography.bodyLarge.fontFamily ?: FontFamily.Default
+        get() = LocalGlasmioTextStyles.current.body.fontFamily ?: FontFamily.Default
     val largeTitle: TextStyle
         @Composable
         @ReadOnlyComposable
-        get() = MaterialTheme.typography.headlineLarge
+        get() = LocalGlasmioTextStyles.current.largeTitle
     val title1: TextStyle
         @Composable
         @ReadOnlyComposable
@@ -84,7 +83,7 @@ object IosTypography {
     val title2: TextStyle
         @Composable
         @ReadOnlyComposable
-        get() = MaterialTheme.typography.headlineSmall
+        get() = LocalGlasmioTextStyles.current.title2
     val title3: TextStyle
         @Composable
         @ReadOnlyComposable
@@ -92,11 +91,11 @@ object IosTypography {
     val headline: TextStyle
         @Composable
         @ReadOnlyComposable
-        get() = MaterialTheme.typography.titleMedium
+        get() = LocalGlasmioTextStyles.current.headline
     val body: TextStyle
         @Composable
         @ReadOnlyComposable
-        get() = MaterialTheme.typography.bodyLarge
+        get() = LocalGlasmioTextStyles.current.body
     val callout: TextStyle
         @Composable
         @ReadOnlyComposable
@@ -104,7 +103,7 @@ object IosTypography {
     val subheadline: TextStyle
         @Composable
         @ReadOnlyComposable
-        get() = MaterialTheme.typography.bodyMedium
+        get() = LocalGlasmioTextStyles.current.subheadline
     val footnote: TextStyle
         @Composable
         @ReadOnlyComposable
@@ -120,7 +119,7 @@ object IosTypography {
     val caption: TextStyle
         @Composable
         @ReadOnlyComposable
-        get() = MaterialTheme.typography.labelMedium
+        get() = LocalGlasmioTextStyles.current.caption1
 }
 
 // Sheet vibrancy and adaptive materials can change this palette every animation frame.
@@ -144,6 +143,8 @@ val LocalGlassColors = compositionLocalOf {
 
 /** Content color inherited by symbols and text placed inside a glass surface. */
 val LocalGlassContentColor = compositionLocalOf<Color?> { null }
+/** Inherited text and symbol ink; replaces the Material content-color local. */
+val LocalGlasmioContentColor = compositionLocalOf { Color.Black }
 val LocalGroupedListIconColor = staticCompositionLocalOf<Color?> { null }
 val LocalGroupedListBackgroundAlpha = staticCompositionLocalOf { 1f }
 

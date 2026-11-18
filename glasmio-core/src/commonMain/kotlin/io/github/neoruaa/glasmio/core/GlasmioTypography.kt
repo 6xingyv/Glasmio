@@ -1,7 +1,5 @@
 package io.github.neoruaa.glasmio.core
 
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.remember
@@ -88,33 +86,14 @@ class GlasmioTextStyles internal constructor(
     val caption1: TextStyle get() = get(IosTextStyle.Caption1)
     val caption2: TextStyle get() = get(IosTextStyle.Caption2)
 
-    internal fun resizeMaterialTypography(source: Typography): Typography {
-        fun TextStyle.resized(role: IosTextStyle): TextStyle {
-            val preset = get(role)
-            return copy(
-                fontSize = preset.fontSize,
-                lineHeight = preset.lineHeight,
-                letterSpacing = preset.letterSpacing,
-            )
-        }
-        return source.copy(
-            displayLarge = source.displayLarge.resized(IosTextStyle.LargeTitle),
-            displayMedium = source.displayMedium.resized(IosTextStyle.Title1),
-            displaySmall = source.displaySmall.resized(IosTextStyle.Title2),
-            headlineLarge = source.headlineLarge.resized(IosTextStyle.LargeTitle),
-            headlineMedium = source.headlineMedium.resized(IosTextStyle.Title1),
-            headlineSmall = source.headlineSmall.resized(IosTextStyle.Title2),
-            titleLarge = source.titleLarge.resized(IosTextStyle.Title3),
-            titleMedium = source.titleMedium.resized(IosTextStyle.Headline),
-            titleSmall = source.titleSmall.resized(IosTextStyle.Subheadline),
-            bodyLarge = source.bodyLarge.resized(IosTextStyle.Body),
-            bodyMedium = source.bodyMedium.resized(IosTextStyle.Subheadline),
-            bodySmall = source.bodySmall.resized(IosTextStyle.Footnote),
-            labelLarge = source.labelLarge.resized(IosTextStyle.Body),
-            labelMedium = source.labelMedium.resized(IosTextStyle.Caption1),
-            labelSmall = source.labelSmall.resized(IosTextStyle.Caption2),
-        )
-    }
+    /** Keep each semantic style, including per-weight host variable font families. */
+    fun mapStyles(transform: (IosTextStyle, IosTextVariant, TextStyle) -> TextStyle): GlasmioTextStyles =
+        GlasmioTextStyles(styles.mapValues { (key, style) -> transform(key.first, key.second, style) })
+
+    fun withLetterSpacing(tracking: TextUnit): GlasmioTextStyles =
+        if (tracking.isUnspecified) this else mapStyles { _, _, style -> style.copy(letterSpacing = tracking) }
+
+
 }
 
 /** Default Large-category values in sp, following the host's Android font scaling. */
@@ -143,32 +122,27 @@ fun glasmioTextStyles(
 @Composable
 fun rememberGlasmioTextStyles(
     dynamicTypeSize: IosDynamicTypeSize? = null,
-    typography: Typography = MaterialTheme.typography,
+    typography: GlasmioTextStyles = LocalGlasmioTextStyles.current,
     letterSpacing: TextUnit = TextUnit.Unspecified,
 ): GlasmioTextStyles {
     val density = LocalDensity.current
     return remember(typography, dynamicTypeSize, density, letterSpacing) {
-        buildTextStyles(typography, FontFamily.Default, dynamicTypeSize, density, letterSpacing)
+        if (dynamicTypeSize == null) typography.withLetterSpacing(letterSpacing)
+        else buildTextStyles(typography, FontFamily.Default, dynamicTypeSize, density, letterSpacing)
+            .mapStyles { style, variant, scaled ->
+                // Preserve the host's typeface and font features when Dynamic Type changes.
+                val source = typography[style, variant]
+                scaled.copy(fontFamily = source.fontFamily, fontFeatureSettings = source.fontFeatureSettings)
+            }
     }
 }
 
 val LocalGlasmioTextStyles = staticCompositionLocalOf { glasmioTextStyles() }
 val LocalGlasmioLetterSpacing = staticCompositionLocalOf { TextUnit.Unspecified }
 
-internal fun Typography.withLetterSpacing(letterSpacing: TextUnit): Typography {
-    if (letterSpacing.isUnspecified) return this
-    fun TextStyle.tracked() = copy(letterSpacing = letterSpacing)
-    return copy(
-        displayLarge = displayLarge.tracked(), displayMedium = displayMedium.tracked(), displaySmall = displaySmall.tracked(),
-        headlineLarge = headlineLarge.tracked(), headlineMedium = headlineMedium.tracked(), headlineSmall = headlineSmall.tracked(),
-        titleLarge = titleLarge.tracked(), titleMedium = titleMedium.tracked(), titleSmall = titleSmall.tracked(),
-        bodyLarge = bodyLarge.tracked(), bodyMedium = bodyMedium.tracked(), bodySmall = bodySmall.tracked(),
-        labelLarge = labelLarge.tracked(), labelMedium = labelMedium.tracked(), labelSmall = labelSmall.tracked(),
-    )
-}
 
 private fun buildTextStyles(
-    typography: Typography?,
+    typography: GlasmioTextStyles?,
     fontFamily: FontFamily,
     dynamicTypeSize: IosDynamicTypeSize?,
     density: Density?,
@@ -182,18 +156,7 @@ private fun buildTextStyles(
     return GlasmioTextStyles(buildMap {
         for (role in IosTextStyle.entries) {
             val (size, leading) = dynamicTypeMetrics[category.ordinal][role.ordinal]
-            val source = if (typography == null) TextStyle(fontFamily = fontFamily) else when (role) {
-                IosTextStyle.LargeTitle -> typography.headlineLarge
-                IosTextStyle.Title1 -> typography.headlineMedium
-                IosTextStyle.Title2 -> typography.headlineSmall
-                IosTextStyle.Title3 -> typography.titleLarge
-                IosTextStyle.Headline -> typography.titleMedium
-                IosTextStyle.Body, IosTextStyle.Callout -> typography.bodyLarge
-                IosTextStyle.Subheadline -> typography.bodyMedium
-                IosTextStyle.Footnote -> typography.bodySmall
-                IosTextStyle.Caption1 -> typography.labelMedium
-                IosTextStyle.Caption2 -> typography.labelSmall
-            }
+            val source = typography?.get(role) ?: TextStyle(fontFamily = fontFamily)
             for (variant in role.variants) {
                 val italic = variant == IosTextVariant.Italic ||
                     variant == IosTextVariant.EmphasizedItalic ||

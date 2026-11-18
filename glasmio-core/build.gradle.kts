@@ -30,7 +30,6 @@ kotlin {
             api(compose.runtime)
             api(compose.ui)
             api(compose.foundation)
-            api(compose.material3)
         }
         androidMain.dependencies {
             // Retain Android's exact continuous corners while sharing the shape API.
