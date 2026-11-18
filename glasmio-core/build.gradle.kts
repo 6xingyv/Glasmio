@@ -31,6 +31,9 @@ kotlin {
             api(compose.foundation)
             api("com.mocharealm.gaze:capsule:2.1.1-patch2")
         }
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+        }
         getByName("androidHostTest").dependencies {
             implementation("junit:junit:4.13.2")
         }

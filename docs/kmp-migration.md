@@ -121,3 +121,5 @@ compile/runtime dependency graphs and rejects any transitive `androidx.compose.m
 with `scripts/check_no_material.py`, this prevents both source imports and indirect
 UI toolkit dependencies from silently returning. This check requires a real Gradle
 resolution on CI and is not yet reported as passing.
+
+Cross-platform foundation tests now assert native typography metrics, shared G2 generic outlines and identical Android/Desktop vector fallback identities. These are source-level assertions until Gradle CI successfully executes them; a green build is still required for merger readiness.
