@@ -44,8 +44,18 @@ private fun resolveGlasmioTextStyle(
     textDecoration: TextDecoration?,
     textAlign: TextAlign?,
     lineHeight: TextUnit,
-): TextStyle = LocalGlasmioTextStyle.current.merge(style).merge(TextStyle(
-    color = if (color == Color.Unspecified) LocalGlasmioContentColor.current else color,
+): TextStyle {
+    val inherited = LocalGlasmioTextStyle.current
+    // Preserve explicit style ink (and inherited emphasis) before using the
+    // semantic foreground. A default foreground must not overwrite an alert's style.
+    val foreground = when {
+        color != Color.Unspecified -> color
+        style.color != Color.Unspecified -> style.color
+        inherited.color != Color.Unspecified -> inherited.color
+        else -> LocalGlasmioContentColor.current
+    }
+    return inherited.merge(style).merge(TextStyle(
+    color = foreground,
     fontSize = fontSize,
     fontStyle = fontStyle,
     fontWeight = fontWeight,
@@ -54,7 +64,8 @@ private fun resolveGlasmioTextStyle(
     textDecoration = textDecoration,
     textAlign = textAlign,
     lineHeight = lineHeight,
-))
+    ))
+}
 
 @Composable
 fun GlasmioText(
