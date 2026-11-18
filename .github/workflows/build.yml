@@ -28,7 +28,9 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - run: sdkmanager 'platforms;android-37.0' 'ndk;27.1.12297006' 'cmake;3.22.1'
       - name: Compile KMP core for Desktop
-        run: ./gradlew :glasmio-core:compileKotlinDesktop :glasmio-core:desktopTest --console=plain
+        run: ./gradlew :glasmio-core:compileKotlinDesktop :glasmio-core:desktopTest :glasmio-symbols:desktopTest --console=plain
+      - name: Check SF Symbols catalog
+        run: python3 scripts/generate_sf_symbol_catalog.py --check
       - name: Enforce independent library boundary
         run: '! rg "com\.ljyh\.mei" glasmio-*/src'
       - run: ./gradlew testDebugUnitTest lintDebug :sample:assembleDebug :sample:assembleDebugAndroidTest publishAllPublicationsToStagingRepository --console=plain

@@ -14,7 +14,7 @@ import subprocess
 
 REPOSITORY = Path(__file__).resolve().parents[1]
 DEFAULT_CATALOG = REPOSITORY / (
-    "glasmio-icons/src/main/java/io/github/neoruaa/glasmio/icons/SfSymbolCatalog.kt"
+    "glasmio-symbols/src/commonMain/kotlin/io/github/neoruaa/glasmio/icons/SfSymbolCatalog.kt"
 )
 DEFAULT_CLI = Path("/Applications/SF Symbols Beta.app/Contents/Executables/sfsymbols")
 EXCLUDED_DIRECTORIES = {"build", ".gradle", ".git", ".idea", ".local-research", ".venv", "venv"}
