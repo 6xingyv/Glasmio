@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import io.github.neoruaa.glasmio.core.GlasmioText
 import io.github.neoruaa.glasmio.core.IosTypography
 import io.github.neoruaa.glasmio.core.LocalGlassColors
+import io.github.neoruaa.glasmio.core.systemGray4
 import io.github.neoruaa.glasmio.core.LocalGlasmioShapes
 
 /** Minimal native Glasmio surface for all Compose targets, without a UI toolkit dependency. */
