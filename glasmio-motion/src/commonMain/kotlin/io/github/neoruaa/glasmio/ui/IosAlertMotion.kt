@@ -18,7 +18,7 @@ object IosAlertMotion {
     // This duration is a settling interval, not a spring response. See docs/alert-motion.md.
     private const val AngularFrequency = 22.854984466344746
 
-    internal val Timing = Easing { fraction ->
+    val Timing = Easing { fraction ->
         when {
             fraction <= 0f -> 0f
             fraction >= 1f -> 1f // CA removes the animation at its exact duration.
