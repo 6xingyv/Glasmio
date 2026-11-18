@@ -51,3 +51,11 @@ The native control's material presets and geometry profiles now also live in `gl
 ## CI and release safety
 
 The Android consumer verifier now uses AGP 9.3.1, consistent with the build. CI executes core Android host tests in addition to Desktop/iOS compilation. The old release bundle logic recognizes only six Android AARs, so tagged releases are intentionally blocked before signing or upload until publication artifacts and legal notices can be verified for all KMP variants. **Do not bypass this guard to publish.**
+
+## Desktop entry point
+
+A runnable `desktop-sample` JVM application now consumes the shared public API.
+Build with `./gradlew :desktop-sample:compileKotlin` and launch via
+`./gradlew :desktop-sample:run` on a workstation with a graphical desktop.
+It displays colors, typography, material profile constants and numeric optical
+samples, **not** a simulated or faithful Desktop Liquid Glass renderer.
