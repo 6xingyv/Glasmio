@@ -1,7 +1,5 @@
 package io.github.neoruaa.glasmio.glass
 
-import io.github.neoruaa.glasmio.core.*
-import io.github.neoruaa.glasmio.icons.*
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -57,7 +55,7 @@ class LiquidMenuMorphMotion {
         private set
 
     private var source = Rect.Zero
-    internal val sourceBounds: Rect get() = source
+    val sourceBounds: Rect get() = source
     private var through = Rect.Zero
     private var destination = Rect.Zero
     private var destinationRadius = 0f
