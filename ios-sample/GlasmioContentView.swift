@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 import GlasmioComponents
 
 /// Add this file to an iOS app target and link the generated GlasmioComponents framework.

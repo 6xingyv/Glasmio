@@ -29,6 +29,8 @@ jobs:
       - run: sdkmanager 'platforms;android-37.0' 'ndk;27.1.12297006' 'cmake;3.22.1'
       - name: Compile KMP core for Desktop
         run: ./gradlew :glasmio-core:compileKotlinDesktop :glasmio-core:desktopTest :glasmio-symbols:desktopTest :glasmio-optics:desktopTest :glasmio-motion:desktopTest :glasmio-components:desktopTest :desktop-sample:compileKotlin --console=plain
+      - name: Guard KMP source boundaries
+        run: python3 scripts/check_kmp_boundaries.py
       - name: Check SF Symbols catalog
         run: python3 scripts/generate_sf_symbol_catalog.py --check
       - name: Enforce independent library boundary
@@ -66,7 +68,7 @@ jobs:
             sample/build/outputs/apk/androidTest/debug/*.apk
   ios-compile:
     name: Compile iOS KMP libraries
-    runs-on: macos-15
+    runs-on: macos-26
     timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
@@ -75,5 +77,9 @@ jobs:
           distribution: temurin
           java-version: '21'
       - uses: gradle/actions/setup-gradle@v4
+      - name: Select Xcode supported by Kotlin 2.4.21
+        run: |
+          sudo xcode-select -s /Applications/Xcode_26.4.1.app/Contents/Developer
+          xcodebuild -version
       - name: Compile iOS Simulator Arm64
         run: ./gradlew :glasmio-core:compileKotlinIosSimulatorArm64 :glasmio-symbols:compileKotlinIosSimulatorArm64 :glasmio-optics:compileKotlinIosSimulatorArm64 :glasmio-motion:compileKotlinIosSimulatorArm64 :glasmio-components:compileKotlinIosSimulatorArm64 :glasmio-components:linkDebugFrameworkIosSimulatorArm64 --console=plain

@@ -82,3 +82,5 @@ actual `commonMain` message bubbles, themes, text and sidebar vector inside a
 in an Xcode app target. To link a simulator binary on macOS run
 `./gradlew :glasmio-components:linkDebugFrameworkIosSimulatorArm64`.
 This is a functional shared-UI preview and **not** an iOS glass backdrop renderer.
+
+The macOS runner is now `macos-26` with Xcode 26.4.1 pinned for Kotlin 2.4.21 compatibility, avoiding the older Xcode 16 toolchain on `macos-15`. CI also statically checks that Kotlin `commonMain` files do not import Android or Java platform APIs.
