@@ -27,6 +27,8 @@ jobs:
           log-accepted-android-sdk-licenses: false
       - uses: gradle/actions/setup-gradle@v4
       - run: sdkmanager 'platforms;android-37.0' 'ndk;27.1.12297006' 'cmake;3.22.1'
+      - name: Compile KMP core for Desktop
+        run: ./gradlew :glasmio-core:compileKotlinDesktop :glasmio-core:desktopTest --console=plain
       - name: Enforce independent library boundary
         run: '! rg "com\.ljyh\.mei" glasmio-*/src'
       - run: ./gradlew testDebugUnitTest lintDebug :sample:assembleDebug :sample:assembleDebugAndroidTest publishAllPublicationsToStagingRepository --console=plain
