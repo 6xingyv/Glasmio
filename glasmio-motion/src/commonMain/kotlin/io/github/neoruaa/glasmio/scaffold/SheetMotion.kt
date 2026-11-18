@@ -14,7 +14,7 @@ object GlasmioSheetDefaults {
 }
 
 /** The final nonzero gesture direction resolves a release with zero velocity. */
-internal fun sheetDragOpens(velocityY: Float, lastDeltaY: Float, originOpen: Boolean): Boolean = when {
+fun sheetDragOpens(velocityY: Float, lastDeltaY: Float, originOpen: Boolean): Boolean = when {
     velocityY < 0f -> true
     velocityY > 0f -> false
     lastDeltaY < 0f -> true
@@ -22,5 +22,5 @@ internal fun sheetDragOpens(velocityY: Float, lastDeltaY: Float, originOpen: Boo
     else -> originOpen
 }
 
-internal fun sheetDragValue(value: Float, deltaPx: Float, density: Float, collapsed: Float, expanded: Float): Float =
+fun sheetDragValue(value: Float, deltaPx: Float, density: Float, collapsed: Float, expanded: Float): Float =
     (value - deltaPx / density).coerceIn(collapsed, expanded.coerceAtLeast(collapsed))

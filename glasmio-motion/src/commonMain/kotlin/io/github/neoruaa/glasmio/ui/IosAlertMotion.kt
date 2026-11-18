@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import kotlin.math.exp
 
 /** UIKit's UIAlertControllerVisualStyleAlert in iOS 27.0 (24A434). */
-internal object IosAlertMotion {
+object IosAlertMotion {
     const val InitialScale = 1.2f
     const val DurationMillis = 404
 

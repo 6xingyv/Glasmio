@@ -6,12 +6,12 @@ import androidx.compose.runtime.mutableFloatStateOf
 import kotlin.math.*
 
 /** SwiftUI Spring(duration:bounce:) expressed in seconds and logical units. */
-internal data class HeaderSpring(val duration: Float, val bounce: Float) {
+data class HeaderSpring(val duration: Float, val bounce: Float) {
     val omega = (2.0 * PI / duration).toFloat()
     val damping = if (bounce >= 0f) 1f - bounce else 1f / (1f + bounce)
 }
 
-internal object HeaderSprings {
+object HeaderSprings {
     val geometry = HeaderSpring(.416f, .25f)
     val interactive = HeaderSpring(.2f, 0f)
     val up = HeaderSpring(.292f, .5f)
@@ -22,7 +22,7 @@ internal object HeaderSprings {
 }
 
 /** Exact damped oscillator integration; retargeting preserves both position and velocity. */
-internal class HeaderTrack(initial: Float) {
+class HeaderTrack(initial: Float) {
     var value by mutableFloatStateOf(initial)
         private set
     var velocity = 0f
@@ -63,7 +63,7 @@ internal class HeaderTrack(initial: Float) {
     }
 }
 
-internal class HeaderPulse {
+class HeaderPulse {
     private val x = arrayOf(HeaderTrack(0f), HeaderTrack(1f))
     private val y = arrayOf(HeaderTrack(0f), HeaderTrack(1f))
     private var rising = 0

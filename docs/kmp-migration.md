@@ -43,3 +43,7 @@ using the exact existing AGSL/RenderEffect/JNI path. **Shader source sharing is 
 GPU backend portability**: Desktop and iOS still need actual Skia/Metal renderers.
 
 The native control's material presets and geometry profiles now also live in `glasmio-optics/commonMain`. These maintain the original package names and computed parameters, while Android owns the actual material rendering.
+
+## Shared motion
+
+`glasmio-motion` now contains the original iOS alert, context menu, header, sheet drag, and navigation transition motion solvers. It preserves their Kotlin packages for Android call sites; the Android UI and Scaffold modules depend on it while Desktop/iOS can run its motion primitives without the Android UI layers. Unit tests verify endpoint behavior. The visual UI is still Android-only.

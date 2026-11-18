@@ -13,7 +13,7 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 
 @Immutable
-internal class NavTransitionEasing(
+class NavTransitionEasing(
     response: Float,
     damping: Float,
 ) : Easing {

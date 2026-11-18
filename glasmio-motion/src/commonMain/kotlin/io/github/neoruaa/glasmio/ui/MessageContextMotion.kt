@@ -7,7 +7,7 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 
 /** Physical timing from ChatKit's TapbackPickerBalloonView and accessory in iOS 27. */
-internal object MessageContextMotion {
+object MessageContextMotion {
     const val PickerHeight = 64.24f
     const val TailExtent = 50f
     const val ExitRetentionMillis = 900L
