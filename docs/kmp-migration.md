@@ -33,3 +33,11 @@ Kotlin 2.4.21 is tested with AGP through 9.3.1, not the previous AGP 9.4.1.
 The build now pins AGP 9.3.1 (which supports SDK 37), together with Gradle 9.6.
 The core and symbol catalog additionally declare iosArm64, iosSimulatorArm64 and iosX64;
 use the macOS CI job for native compilation. Android and Desktop builds remain mandatory.
+
+## Shared Liquid Glass optics
+
+The `glasmio-optics` KMP module owns the signed-displacement and spectral-refraction
+shader source plus a CPU reference scalar transfer, with cross-platform tests.
+Android `glasmio-glass` consumes it as an implementation dependency and continues
+using the exact existing AGSL/RenderEffect/JNI path. **Shader source sharing is not
+GPU backend portability**: Desktop and iOS still need actual Skia/Metal renderers.

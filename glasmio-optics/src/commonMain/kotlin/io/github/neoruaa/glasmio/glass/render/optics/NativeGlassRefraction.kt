@@ -4,7 +4,7 @@ package io.github.neoruaa.glasmio.glass.render.optics
  * Scalar transfer recovered from iOS 27 QuartzCore's glass_background_{sdf_,}r AIR.
  * Coordinates, inverse heights and signed amplitudes use the same effect-texture units.
  */
-internal const val NativeGlassRefractionFunctions = """
+const val NativeGlassRefractionFunctions = """
 float nativeGlassDisplacement(float signedDistance, float inverseHeight, float signedAmount) {
     float u = clamp(-signedDistance * inverseHeight, 0.0, 1.0);
     return signedAmount * (1.0 - clamp(sqrt(u * (2.0 - u)), 0.0, 1.0));
@@ -27,7 +27,7 @@ float2 nativeGlassAberrationNormal(float2 gradient, float4 matrix, float2 direct
 """
 
 /** The caller supplies nativeGlassSample(coordinate, radius) for its source-filter graph. */
-internal const val NativeGlassSpectralFunctions = """
+const val NativeGlassSpectralFunctions = """
 float3 nativeGlassStraightColor(half4 color) {
     float3 rgb = float3(color.rgb);
     rgb = float3(abs(rgb.r) < 0.000001 ? 0.0 : rgb.r,
@@ -60,7 +60,7 @@ half4 nativeGlassAberrate(float2 coordinate, float2 delta, float radius) {
 """
 
 /** Explicit custom control optics retained independently of the recovered material defaults. */
-internal const val CustomGlassChromaticFunctions = """
+const val CustomGlassChromaticFunctions = """
 float2 customGlassChromaticVector(float2 displacement, float2 point, float2 halfExtent) {
     float crossTerm = clamp(point.x * point.y / max(halfExtent.x * halfExtent.y, 0.0001), -1.0, 1.0);
     return displacement * crossTerm;
