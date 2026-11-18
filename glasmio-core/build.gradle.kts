@@ -30,10 +30,7 @@ kotlin {
             api(compose.runtime)
             api(compose.ui)
             api(compose.foundation)
-        }
-        androidMain.dependencies {
-            // Retain Android's exact continuous corners while sharing the shape API.
-            api("io.github.kyant0:capsule:2.1.3")
+            api("com.mocharealm.gaze:capsule:2.1.1-patch2")
         }
         getByName("androidHostTest").dependencies {
             implementation("junit:junit:4.13.2")

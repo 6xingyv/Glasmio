@@ -3,10 +3,12 @@ package io.github.neoruaa.glasmio.core
 import androidx.compose.foundation.shape.CornerBasedShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.Dp
+import com.mocharealm.gaze.capsule.ContinuousRoundedRectangle
 
-/** Android repairs OEM cutout dispatch; other targets have no such View workaround. */
+/** Android's OEM inset workaround is the only platform-specific core UI operation. */
 @Composable
 expect fun ProvideGlasmioDisplayCutoutFix()
 
-/** Android uses Capsule's continuous curvature; desktop uses a Compose approximation. */
-internal expect fun glasmioContinuousRoundedRectangle(radius: Dp): CornerBasedShape
+/** The exact same G2 continuous-corner geometry on Android, Desktop and iOS. */
+internal fun glasmioContinuousRoundedRectangle(radius: Dp): CornerBasedShape =
+    ContinuousRoundedRectangle(radius)

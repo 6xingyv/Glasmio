@@ -105,3 +105,10 @@ buttons and UIKit-sized toggles. Android still uses the richer native glass cont
 No Material icon packs or fonts are bundled: identical Glasmio vector fallback paths
 serve Android (when no host font is supplied) and Desktop. The GPU parity work is
 separate; a non-glass panel is not claimed to be an optical glass equivalent.
+
+## One G2 corner implementation on every target
+
+The previous Desktop/iOS `RoundedCornerShape` substitutes were removed. Core now
+uses `com.mocharealm.gaze:capsule:2.1.1-patch2`, a multiplatform G2 Capsule
+implementation, from `commonMain` on Android, Desktop and iOS. The host theme
+always resolves corner geometry from the same library and numeric radii.
