@@ -12,7 +12,6 @@ dependencies {
     api(project(":glasmio-ui"))
     api("androidx.navigation3:navigation3-runtime:1.2.0")
     api("androidx.navigationevent:navigationevent-compose:1.1.2")
-    api("top.yukonga.miuix.kmp:miuix-navigation3-ui-android:0.9.3")
-    implementation("top.yukonga.miuix.kmp:miuix-ui-android:0.9.3")
+    api("androidx.navigation3:navigation3-ui:1.2.0")
     implementation("androidx.activity:activity-compose:1.13.0")
 }
