@@ -42,6 +42,7 @@ import io.github.neoruaa.glasmio.ui.GlasmioSymbolIcon
 import io.github.neoruaa.glasmio.ui.GlasmioNativePanel
 import io.github.neoruaa.glasmio.ui.GlasmioNativeButton
 import io.github.neoruaa.glasmio.ui.GlasmioNativeSwitch
+import io.github.neoruaa.glasmio.ui.loupeSpringStiffness
 
 /** All Desktop controls are pure Glasmio/Compose Foundation, never Material. */
 fun main() = application {
@@ -100,6 +101,7 @@ fun main() = application {
                     val geometry = navigationGlassGeometryProfile(150f, material)
                     GlasmioText("Native blur radius: ${geometry.blurRadius} pt")
                     GlasmioText("Reference displacement: ${GlassOptics.displacement(-5f, .1f, 14f)}")
+                    GlasmioText("UIKit loupe spring stiffness: ${loupeSpringStiffness(.3f)}")
                     GlasmioText("Registered symbol addresses: ${SfSymbolCatalog.systemNames.size}")
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         GlasmioNativeButton("Toggle material", onClick = { clearMaterial = !clearMaterial })

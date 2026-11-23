@@ -43,10 +43,10 @@ private const val ParkDistance = 0.05f
 private const val ParkSpeed = 0.5f
 
 /** UIKit's line-break dismissal progress at which the lens closes. */
-internal const val LoupeDismissalThreshold = 0.85f
+const val LoupeDismissalThreshold = 0.85f
 
 /** Distance, in dp, that counts as a full line break for [loupeLineBreakProgress]. */
-internal const val LoupeLineBreakDistance = 39f
+const val LoupeLineBreakDistance = 39f
 
 /**
  * Timing for the glass caret loupe recovered from `UIKitCore` (`_UITextMagnifiedGlassLoupeView`,
@@ -173,7 +173,7 @@ enum class GlasmioLoupeOrientation {
 
 /** A single integration result of [loupeFollowStep] and [loupeSpringStep]. */
 @Immutable
-internal data class LoupeFollowFrame(
+data class LoupeFollowFrame(
     val position: Offset,
     val velocity: Offset,
     /**
@@ -185,7 +185,7 @@ internal data class LoupeFollowFrame(
 )
 
 /** Compose stiffness for a UIKit spring expressed as a response period. */
-internal fun loupeSpringStiffness(responseSeconds: Float): Float {
+fun loupeSpringStiffness(responseSeconds: Float): Float {
     val angular = 2f * PI.toFloat() / responseSeconds
     return angular * angular
 }
@@ -195,7 +195,7 @@ internal fun loupeSpringStiffness(responseSeconds: Float): Float {
  * UIKit hard-codes 0.3 per display-link tick; Android panels vary between 60 and 144 Hz, so the
  * coefficient is recomputed to keep the 47 ms time constant instead of the per-frame ratio.
  */
-internal fun loupeLowPassAlpha(alphaPerFrame: Float, elapsedSeconds: Float): Float {
+fun loupeLowPassAlpha(alphaPerFrame: Float, elapsedSeconds: Float): Float {
     val frame = elapsedSeconds.coerceIn(0f, MaxFrameSeconds) / ReferenceFrameSeconds
     return 1f - (1f - alphaPerFrame).pow(frame)
 }
@@ -226,7 +226,7 @@ internal fun loupeLowPassAlpha(alphaPerFrame: Float, elapsedSeconds: Float): Flo
  * and the two lags compose in the wrong proportion: a 500 dp/s drag then trails by ~73 dp instead of
  * ~35 dp, which reads as the lens not keeping up.
  */
-internal fun loupeFollowStep(
+fun loupeFollowStep(
     position: Offset,
     velocity: Offset,
     model: Offset,
@@ -271,7 +271,7 @@ internal fun loupeFollowStep(
  * fixed offset the rest of the geometry assumes, so the frame is clamped instead and the sample
  * stays anchored on the touch point.
  */
-internal fun loupeLiftCenter(finger: Float, lift: Float, extent: Float, lower: Float, upper: Float): Float {
+fun loupeLiftCenter(finger: Float, lift: Float, extent: Float, lower: Float, upper: Float): Float {
     val minimum = lower + extent / 2f
     val maximum = upper - extent / 2f
     if (maximum < minimum) return (lower + upper) / 2f
@@ -286,7 +286,7 @@ internal fun loupeLiftCenter(finger: Float, lift: Float, extent: Float, lower: F
  * `width - 2 * inset - radius`, not `width - inset - radius`. Only x is clamped because a horizontal
  * lens is wider than the finger.
  */
-internal fun loupeClampX(x: Float, left: Float, right: Float, lensWidth: Float, inset: Float): Float {
+fun loupeClampX(x: Float, left: Float, right: Float, lensWidth: Float, inset: Float): Float {
     val radius = lensWidth / 2f
     val minimum = left + inset + radius
     val maximum = left + (right - left) - 2f * inset - radius
@@ -295,7 +295,7 @@ internal fun loupeClampX(x: Float, left: Float, right: Float, lensWidth: Float, 
 }
 
 /** UIKit's `__UILerp`. */
-internal fun loupeLerp(amount: Float, from: Float, to: Float): Float = (1f - amount) * from + amount * to
+fun loupeLerp(amount: Float, from: Float, to: Float): Float = (1f - amount) * from + amount * to
 
 /** Initial slope of UIKit's soft-clamp shoulder (`0x1c553f980`). */
 private const val SoftClampSlope = 0.55f
@@ -307,7 +307,7 @@ private const val SoftClampSlope = 0.55f
  * a hard flick nor its exact reverse can drive the body past roughly ±30%. UIKit applies it to each
  * interpolated term, not to the sum.
  */
-internal fun loupeSoftClamp(value: Float, lower: Float, upper: Float): Float {
+fun loupeSoftClamp(value: Float, lower: Float, upper: Float): Float {
     val margin = (upper - lower) / 3f
     if (margin <= 0f) return value.coerceIn(lower, upper)
     return when {
@@ -349,7 +349,7 @@ private fun flexUpperBound(dimension: Float, motion: GlasmioLoupeFlexMotion): Fl
  * caret. [bodyScale] is that live size; passing the resting size during the opening pass makes the
  * drift up to twenty times too large, which reads as the small opening body being flung sideways.
  */
-internal fun loupeFlex(
+fun loupeFlex(
     acceleration: Offset,
     velocity: Offset,
     width: Float,
@@ -395,7 +395,7 @@ internal fun loupeFlex(
  * and `activationStretch` taller than its resting frame and relaxes into it. The motion axis is the
  * body's width, matching an interaction that just settled on a caret instead of moving.
  */
-internal fun loupeActivationScale(pulse: Float, motion: GlasmioLoupeFlexMotion): Offset {
+fun loupeActivationScale(pulse: Float, motion: GlasmioLoupeFlexMotion): Offset {
     if (!motion.enabled || !motion.activationEnabled || pulse == 0f) return Offset(1f, 1f)
     return Offset(1f - motion.activationSquash * pulse, 1f + motion.activationStretch * pulse)
 }
@@ -405,7 +405,7 @@ internal fun loupeActivationScale(pulse: Float, motion: GlasmioLoupeFlexMotion):
  * can drive this directly; [GlasmioMagnifier] uses one internally for its center.
  */
 @Stable
-class GlasmioLoupeFollowState internal constructor(initialPosition: Offset) {
+class GlasmioLoupeFollowState constructor(initialPosition: Offset) {
     /** Current center of the lens in overlay pixels. */
     var position by mutableStateOf(initialPosition)
         private set
@@ -431,7 +431,7 @@ class GlasmioLoupeFollowState internal constructor(initialPosition: Offset) {
         velocity = Offset.Zero
     }
 
-    internal fun advance(target: Offset, motion: GlasmioLoupeMotion, elapsedSeconds: Float) {
+    fun advance(target: Offset, motion: GlasmioLoupeMotion, elapsedSeconds: Float) {
         val frame = loupeFollowStep(position, velocity, samplePosition, target, motion, elapsedSeconds)
         velocity = frame.velocity
         if (frame.position != position) position = frame.position
@@ -475,7 +475,7 @@ fun rememberGlasmioLoupeFollow(
 
 /** Velocity and acceleration sampled from a moving position, in dp units. */
 @Immutable
-internal data class LoupeVelocitySample(val velocity: Offset, val acceleration: Offset) {
+data class LoupeVelocitySample(val velocity: Offset, val acceleration: Offset) {
     companion object {
         val Zero = LoupeVelocitySample(Offset.Zero, Offset.Zero)
     }
@@ -489,7 +489,7 @@ internal data class LoupeVelocitySample(val velocity: Offset, val acceleration: 
  * which would saturate any deformation built on it. The arrays hold [size] samples in chronological
  * order with the newest last, and only samples inside [windowNanos] of the newest participate.
  */
-internal fun loupeWindowedVelocity(
+fun loupeWindowedVelocity(
     times: LongArray,
     positionsX: FloatArray,
     positionsY: FloatArray,
@@ -552,7 +552,7 @@ private const val AccelerationSmoothingSeconds = 0.1f
  * is why the native lens flattens for a drag in either direction and only rises when the drag is
  * arrested. Differentiating the signed velocity instead would mirror the body on reversal.
  */
-internal fun loupeDirectionlessAcceleration(
+fun loupeDirectionlessAcceleration(
     velocity: Offset,
     previousVelocity: Offset,
     spanSeconds: Float,
@@ -573,7 +573,7 @@ internal fun loupeDirectionlessAcceleration(
  * acceleration is directionless; see [loupeDirectionlessAcceleration].
  */
 @Composable
-internal fun rememberLoupeVelocitySample(position: Offset, enabled: Boolean = true): LoupeVelocitySample {
+fun rememberLoupeVelocitySample(position: Offset, enabled: Boolean = true): LoupeVelocitySample {
     val current = rememberUpdatedState(position)
     var sample by remember { mutableStateOf(LoupeVelocitySample.Zero) }
     LaunchedEffect(enabled) {
@@ -650,7 +650,7 @@ private val AccelerationTimeAlpha: Float =
  * momentum that a tracking gesture establishes, so a released deformation returns at the pace its
  * damping and stiffness describe.
  */
-internal fun loupeSpringStep(
+fun loupeSpringStep(
     position: Offset,
     velocity: Offset,
     target: Offset,
@@ -690,7 +690,7 @@ private class LoupeSpringHolder(initial: Offset) {
  * Stops requesting frames while [enabled] is false.
  */
 @Composable
-internal fun rememberLoupeSpringOffset(
+fun rememberLoupeSpringOffset(
     target: Offset,
     dampingRatio: Float,
     stiffness: Float,
@@ -724,14 +724,14 @@ internal fun rememberLoupeSpringOffset(
 }
 
 /** Dismissal progress of a loupe drag that has left its line by [distance], in the units of UIKit's 39 pt threshold. */
-internal fun loupeLineBreakProgress(distance: Float, lineHeight: Float = LoupeLineBreakDistance): Float {
+fun loupeLineBreakProgress(distance: Float, lineHeight: Float = LoupeLineBreakDistance): Float {
     if (lineHeight <= 0f) return 0f
     return (distance / lineHeight).coerceIn(0f, 1f)
 }
 
 /** Diagonal of the lens, the distance over which a follower restarts instead of catching up. */
-internal fun loupeSnapDistance(width: Float, height: Float): Float = hypot(width, height) * 2f
+fun loupeSnapDistance(width: Float, height: Float): Float = hypot(width, height) * 2f
 
 /** Whether a progress value should close the lens. */
-internal fun isLoupeDismissed(progress: Float, motion: GlasmioLoupeMotion): Boolean =
+fun isLoupeDismissed(progress: Float, motion: GlasmioLoupeMotion): Boolean =
     progress >= motion.dismissalThreshold

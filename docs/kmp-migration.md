@@ -174,3 +174,5 @@ sample is its first integration point. The dependency must be resolved in CI
 and any platform-specific AGSL/SkSL issues corrected there before merging.
 
 The iOS UIKit preview now uses the same GPU-backed `glasmio-backdrop` surface as Desktop (through an `iosMain` dependency in `glasmio-components`), with a genuine recorded background and Clear material refraction. This makes the shared optical backend executable from the generated SwiftUI view controller rather than a parameters-only demonstration.
+
+The complete UIKit text-caret loupe physical model (`IosLoupeMotion.kt`) is now shared by `glasmio-motion/commonMain`: follow springs, substep integration, low-pass smoothing, edge clamping, and activation/dismissal envelopes. Android UI uses the same public functions and class in its original package; Desktop/iOS can now implement the actual loupe against these unchanged physical constants. The Android-specific magnifier capture/rendering wrapper remains platform-local.
