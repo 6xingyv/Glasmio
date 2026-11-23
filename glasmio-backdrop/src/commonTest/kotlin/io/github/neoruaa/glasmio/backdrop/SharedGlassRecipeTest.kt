@@ -13,6 +13,6 @@ class SharedGlassRecipeTest {
         assertEquals(.75f, profile.blurRadius)
         assertEquals(18f, profile.innerHeight)
         assertEquals(32.5f, profile.innerAmount)
-        assertTrue(profile.captureScale in .25f.. .5f)
+        assertTrue(profile.captureScale in 0.25f..0.5f)
     }
 }

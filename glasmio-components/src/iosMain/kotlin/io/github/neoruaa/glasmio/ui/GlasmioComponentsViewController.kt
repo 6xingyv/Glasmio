@@ -5,6 +5,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.Row
@@ -26,6 +27,8 @@ import io.github.neoruaa.glasmio.core.GlasmioTheme
 import io.github.neoruaa.glasmio.backdrop.rememberGlasmioBackdrop
 import io.github.neoruaa.glasmio.backdrop.glasmioBackdropSource
 import io.github.neoruaa.glasmio.backdrop.glasmioLiquidGlass
+import io.github.neoruaa.glasmio.backdrop.GlasmioGlassPanel
+import io.github.neoruaa.glasmio.backdrop.GlasmioGlassButton
 import io.github.neoruaa.glasmio.glass.NavigationGlassMaterial
 import io.github.neoruaa.glasmio.core.GlasmioText
 import io.github.neoruaa.glasmio.core.IosTypography
@@ -71,14 +74,12 @@ fun GlasmioComponentsViewController(): UIViewController = ComposeUIViewControlle
             GlasmioMessageBubble(outgoing = true) {
                 GlasmioText("Shared message contours, text styles and interaction state.")
             }
-            Box(
-                Modifier.fillMaxWidth().height(134.dp)
-                    .glasmioLiquidGlass(
-                        backdrop = backdrop,
-                        material = NavigationGlassMaterial.Clear,
-                        sampleMinimumDimension = 134.dp,
-                    )
-                    .padding(20.dp),
+            GlasmioGlassPanel(
+                backdrop = backdrop,
+                modifier = Modifier.fillMaxWidth().height(134.dp),
+                material = NavigationGlassMaterial.Clear,
+                sampleMinimumDimension = 134.dp,
+                contentPadding = PaddingValues(20.dp),
             ) {
                 GlasmioText(
                     "Shared GPU-refraction preview on iOS",
@@ -86,6 +87,11 @@ fun GlasmioComponentsViewController(): UIViewController = ComposeUIViewControlle
                     color = if (dark) Color.White else Color(0xFF1C1C1E),
                 )
             }
+            GlasmioGlassButton(
+                backdrop = backdrop,
+                label = "Toggle appearance",
+                onClick = { dark = !dark },
+            )
             GlasmioText(
                 "Shared backdrop sampling works here; complete Android native-optics parity is not yet verified.",
                 style = IosTypography.footnote,

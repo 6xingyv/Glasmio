@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,6 +30,8 @@ import io.github.neoruaa.glasmio.core.GlasmioTheme
 import io.github.neoruaa.glasmio.backdrop.rememberGlasmioBackdrop
 import io.github.neoruaa.glasmio.backdrop.glasmioBackdropSource
 import io.github.neoruaa.glasmio.backdrop.glasmioLiquidGlass
+import io.github.neoruaa.glasmio.backdrop.GlasmioGlassPanel
+import io.github.neoruaa.glasmio.backdrop.GlasmioGlassButton
 import io.github.neoruaa.glasmio.core.GlasmioText
 import io.github.neoruaa.glasmio.core.IosTypography
 import io.github.neoruaa.glasmio.core.LocalGlassColors
@@ -104,7 +107,11 @@ fun main() = application {
                     GlasmioText("UIKit loupe spring stiffness: ${loupeSpringStiffness(.3f)}")
                     GlasmioText("Registered symbol addresses: ${SfSymbolCatalog.systemNames.size}")
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        GlasmioNativeButton("Toggle material", onClick = { clearMaterial = !clearMaterial })
+                        GlasmioGlassButton(
+                            backdrop = backdrop,
+                            label = "Toggle material",
+                            onClick = { clearMaterial = !clearMaterial },
+                        )
                         Spacer(Modifier.width(8.dp))
                         GlasmioText("Optical profile only", style = IosTypography.footnote)
                     }
@@ -114,14 +121,12 @@ fun main() = application {
                 // Toggling the material switches real optical recipes.
                 val selectedMaterial = if (clearMaterial) NavigationGlassMaterial.Clear
                     else NavigationGlassMaterial.RegularLarge
-                Box(
-                    Modifier.fillMaxWidth().height(152.dp)
-                        .glasmioLiquidGlass(
-                            backdrop = backdrop,
-                            material = selectedMaterial,
-                            sampleMinimumDimension = 152.dp,
-                        )
-                        .padding(24.dp),
+                GlasmioGlassPanel(
+                    backdrop = backdrop,
+                    material = selectedMaterial,
+                    modifier = Modifier.fillMaxWidth().height(152.dp),
+                    sampleMinimumDimension = 152.dp,
+                    contentPadding = PaddingValues(24.dp),
                 ) {
                     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         GlasmioText(
