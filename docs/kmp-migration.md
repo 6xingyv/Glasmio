@@ -143,3 +143,12 @@ and Material widget references. This only controls the Activity window: Compose
 Glasmio still owns all in-app surfaces and styling.
 
 Android glass, UI, navigation and sample have now had their direct Kyant Capsule G2 class imports switched to `com.mocharealm.gaze.capsule`; both platforms share the same implementation. `com.kyant.shapes` is independent (capsule/shape path primitives) and is not a Material Design library.
+
+### Desktop SF glyph parity
+
+Desktop now exposes `LocalGlasmioDesktopSymbolFont` (`FontFamily?`). If an
+application has a licensed symbol font, provide it in composition and
+`GlasmioSymbolIcon` draws the real catalog codepoint, instead of choosing a
+Material-style replacement. Without a provided font it uses the exact same
+GlasmioBuiltInSymbols original vector fallback as Android. No Apple fonts are
+bundled, downloaded or redistributed by Glasmio.

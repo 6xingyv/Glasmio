@@ -35,6 +35,9 @@ kotlin {
         androidMain.dependencies {
             implementation(project(":glasmio-icons"))
         }
+        desktopMain.dependencies {
+            implementation(project(":glasmio-symbols"))
+        }
         commonTest.dependencies { implementation(kotlin("test")) }
     }
 }
