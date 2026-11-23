@@ -21,8 +21,8 @@ class NavigationIndicatorGeometryTest {
     }
 
     @Test fun navigationLensAnchorsOnlySelectedPanel() {
-        assertEquals(1.2f, navigationTabPanelScale(0, 0f, 1.2f))
-        assertEquals(1f, navigationTabPanelScale(1, 0f, 1.2f))
+        assertEquals(1f, navigationTabPanelScale(0, 0f, 1.2f))
+        assertEquals(1.2f, navigationTabPanelScale(1, 0f, 1.2f))
         assertTrue(navigationLensSourceHeight(20f, 100f) >= 1f)
     }
 }
