@@ -135,3 +135,9 @@ Only the custom `GlasmioNavDisplay` renders scenes; the stock material-themed
 NavDisplay composable is not used by the sample. This must still pass on-device
 predictive-back regression tests before merging, to detect any accidental
 runtime references to excluded classes.
+
+The Android sample's window theme no longer inherits from the Android framework
+`Theme.Material` family. It uses bare `Theme.Light.NoTitleBar` / `Theme.NoTitleBar`
+parents instead. The source guard also checks resource XML for Material theme ancestry
+and Material widget references. This only controls the Activity window: Compose
+Glasmio still owns all in-app surfaces and styling.

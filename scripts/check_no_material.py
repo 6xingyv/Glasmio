@@ -19,13 +19,15 @@ code_re = re.compile(
 )
 gradle_re = re.compile(r"(?:compose\.material3|compose\.materialIcons|androidx\.compose\.material(?:3)?[:\"])")
 
+xml_re = re.compile(r"(?:Theme\\.Material(?:3)?\\b|Theme\\.MaterialComponents\\b|com\\.google\\.android\\.material(?:[.:/]|$))")
+
 for path in root.rglob("*"):
     if any(part in {".git", ".gradle", "build", ".idea"} for part in path.parts):
         continue
-    if path.suffix not in {".kt", ".kts"} or not path.is_file():
+    if path.suffix not in {".kt", ".kts", ".xml"} or not path.is_file():
         continue
     code = path.read_text(encoding="utf-8")
-    regex = gradle_re if path.suffix == ".kts" else code_re
+    regex = xml_re if path.suffix == ".xml" else (gradle_re if path.suffix == ".kts" else code_re)
     for match in regex.finditer(code):
         line = code.count("\n", 0, match.start()) + 1
         violations.append(f"{path.relative_to(root)}:{line}: {match.group()}")
