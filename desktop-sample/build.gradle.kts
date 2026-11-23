@@ -12,6 +12,7 @@ dependencies {
     implementation(compose.desktop.currentOs)
     implementation(project(":glasmio-core"))
     implementation(project(":glasmio-components"))
+    implementation(project(":glasmio-backdrop"))
     implementation(project(":glasmio-symbols"))
     implementation(project(":glasmio-motion"))
     implementation(project(":glasmio-optics"))

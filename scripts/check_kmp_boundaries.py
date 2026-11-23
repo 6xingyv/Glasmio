@@ -12,6 +12,7 @@ SHARED_MODULES = (
     "glasmio-optics",
     "glasmio-motion",
     "glasmio-components",
+    "glasmio-backdrop",
 )
 
 # AndroidX Compose and Kotlin stdlib are multiplatform; Android View/Java classes aren't.

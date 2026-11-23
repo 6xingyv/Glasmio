@@ -28,7 +28,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - run: sdkmanager 'platforms;android-37.0' 'ndk;27.1.12297006' 'cmake;3.22.1'
       - name: Compile KMP core for Desktop
-        run: ./gradlew :glasmio-core:compileKotlinDesktop :glasmio-core:desktopTest :glasmio-symbols:desktopTest :glasmio-optics:desktopTest :glasmio-motion:desktopTest :glasmio-components:desktopTest :desktop-sample:compileKotlin --console=plain
+        run: ./gradlew :glasmio-core:compileKotlinDesktop :glasmio-core:desktopTest :glasmio-symbols:desktopTest :glasmio-optics:desktopTest :glasmio-motion:desktopTest :glasmio-components:desktopTest :glasmio-backdrop:compileKotlinDesktop :desktop-sample:compileKotlin --console=plain
       - name: Guard against Material on all platforms
         run: python3 scripts/check_no_material.py
       - name: Guard KMP source boundaries
@@ -88,4 +88,4 @@ jobs:
           sudo xcode-select -s /Applications/Xcode_26.4.1.app/Contents/Developer
           xcodebuild -version
       - name: Compile iOS Simulator Arm64
-        run: ./gradlew :glasmio-core:compileKotlinIosSimulatorArm64 :glasmio-symbols:compileKotlinIosSimulatorArm64 :glasmio-optics:compileKotlinIosSimulatorArm64 :glasmio-motion:compileKotlinIosSimulatorArm64 :glasmio-components:compileKotlinIosSimulatorArm64 :glasmio-components:linkDebugFrameworkIosSimulatorArm64 --console=plain
+        run: ./gradlew :glasmio-core:compileKotlinIosSimulatorArm64 :glasmio-symbols:compileKotlinIosSimulatorArm64 :glasmio-optics:compileKotlinIosSimulatorArm64 :glasmio-motion:compileKotlinIosSimulatorArm64 :glasmio-components:compileKotlinIosSimulatorArm64 :glasmio-components:linkDebugFrameworkIosSimulatorArm64 :glasmio-backdrop:compileKotlinIosSimulatorArm64 --console=plain

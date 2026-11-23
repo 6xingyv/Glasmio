@@ -152,3 +152,23 @@ application has a licensed symbol font, provide it in composition and
 Material-style replacement. Without a provided font it uses the exact same
 GlasmioBuiltInSymbols original vector fallback as Android. No Apple fonts are
 bundled, downloaded or redistributed by Glasmio.
+
+## Real shared backdrop renderer (experimental)
+
+The new `glasmio-backdrop` module depends on the publicly released
+`com.mocharealm.gaze:glassy-liquid-effect:2.0.0` backend, which implements
+GPU RuntimeShader/RenderEffect and graphics-layer sampling for Desktop (Skiko),
+Android and iOS. `rememberGlasmioBackdrop()` +
+`Modifier.glasmioBackdropSource(backdrop)` record a background, while
+`Modifier.glasmioLiquidGlass(backdrop, material, shape)` samples that layer
+and performs real blur/refraction with the existing measured Glasmio
+`NavigationGlassGeometryProfile` and original material fills. It honors
+`GlassAppearance` transparency/refraction options and shares G2 shapes.
+
+**This is the first real Desktop/iOS optical compositing path, but not yet a
+pixel-identical port of Android's custom C++/AGSL native field pipeline.**
+The Android production renderer stays intact; use cross-platform screenshots
+and pixel-difference tests before claiming full visual parity. The module is
+not yet included in the Maven Central release configuration. The Desktop
+sample is its first integration point. The dependency must be resolved in CI
+and any platform-specific AGSL/SkSL issues corrected there before merging.
