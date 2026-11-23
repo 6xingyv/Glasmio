@@ -48,7 +48,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.Dp
-import com.kyant.capsule.ContinuousRoundedRectangle
+import com.mocharealm.gaze.capsule.ContinuousRoundedRectangle
 
 
 private val LocalGroupedListCoordinates = staticCompositionLocalOf<State<LayoutCoordinates?>?> { null }

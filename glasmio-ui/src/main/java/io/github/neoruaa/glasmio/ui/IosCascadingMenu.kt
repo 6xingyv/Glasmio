@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.runtime.rememberCoroutineScope
-import com.kyant.capsule.ContinuousRoundedRectangle
+import com.mocharealm.gaze.capsule.ContinuousRoundedRectangle
 import io.github.neoruaa.glasmio.glass.InteractiveHighlight
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints

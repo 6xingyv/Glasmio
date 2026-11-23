@@ -91,7 +91,7 @@ import androidx.navigation3.ui.NavDisplay
 import io.github.neoruaa.glasmio.scaffold.navigation.iosTransitionSpec
 import io.github.neoruaa.glasmio.scaffold.navigation.iosPopTransitionSpec
 import io.github.neoruaa.glasmio.scaffold.navigation.iosPredictivePopTransitionSpec
-import com.kyant.capsule.ContinuousRoundedRectangle
+import com.mocharealm.gaze.capsule.ContinuousRoundedRectangle
 import io.github.neoruaa.glasmio.glass.render.Backdrop
 import io.github.neoruaa.glasmio.glass.render.LocalGlassAdaptiveLuminanceRange
 import io.github.neoruaa.glasmio.glass.render.backdrops.LayerBackdrop

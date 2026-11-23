@@ -141,3 +141,5 @@ The Android sample's window theme no longer inherits from the Android framework
 parents instead. The source guard also checks resource XML for Material theme ancestry
 and Material widget references. This only controls the Activity window: Compose
 Glasmio still owns all in-app surfaces and styling.
+
+Android glass, UI, navigation and sample have now had their direct Kyant Capsule G2 class imports switched to `com.mocharealm.gaze.capsule`; both platforms share the same implementation. `com.kyant.shapes` is independent (capsule/shape path primitives) and is not a Material Design library.
