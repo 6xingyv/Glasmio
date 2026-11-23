@@ -156,8 +156,9 @@ private fun buildTextStyles(
     return GlasmioTextStyles(buildMap {
         for (role in IosTextStyle.entries) {
             val (size, leading) = dynamicTypeMetrics[category.ordinal][role.ordinal]
-            val source = typography?.get(role) ?: TextStyle(fontFamily = fontFamily)
             for (variant in role.variants) {
+                // A host can provide separate optical/italic fonts per semantic variant.
+                val source = typography?.get(role, variant) ?: TextStyle(fontFamily = fontFamily)
                 val italic = variant == IosTextVariant.Italic ||
                     variant == IosTextVariant.EmphasizedItalic ||
                     (role == IosTextStyle.Callout && variant == IosTextVariant.Emphasized)
@@ -172,7 +173,7 @@ private fun buildTextStyles(
                 }
                 put(role to variant, source.copy(
                     fontSize = size.toFloat().textUnit(),
-                    lineHeight = maxOf(leading.toFloat(), size * 1.4f).textUnit(),
+                    lineHeight = leading.toFloat().textUnit(),
                     letterSpacing = if (letterSpacing.isUnspecified) role.tracking.textUnit() else letterSpacing,
                     fontWeight = FontWeight(weight),
                     fontStyle = if (italic) FontStyle.Italic else FontStyle.Normal,
