@@ -55,8 +55,8 @@ for path in ROOT.rglob("*.kt"):
     if any(part in {".git", ".gradle", "build"} for part in path.parts):
         continue
     content = path.read_text(encoding="utf-8")
-    for match in re.finditer(r"^\\s*import\\s+com\\.kyant\\.capsule\\.", content, re.MULTILINE):
-        line = content.count("\\n", 0, match.start()) + 1
+    for match in re.finditer(r"^\s*import\s+com\.kyant\.capsule\.", content, re.MULTILINE):
+        line = content.count("\n", 0, match.start()) + 1
         violations.append(f"{path.relative_to(ROOT)}:{line}: use com.mocharealm.gaze.capsule")
 
 if violations:
