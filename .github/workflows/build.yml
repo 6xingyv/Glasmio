@@ -28,7 +28,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - run: sdkmanager 'platforms;android-37.0' 'ndk;27.1.12297006' 'cmake;3.22.1'
       - name: Compile KMP core for Desktop
-        run: ./gradlew :glasmio-core:compileKotlinDesktop :glasmio-core:desktopTest :glasmio-symbols:desktopTest :glasmio-optics:desktopTest :glasmio-motion:desktopTest :glasmio-components:desktopTest :glasmio-backdrop:compileKotlinDesktop :desktop-sample:compileKotlin --console=plain
+        run: ./gradlew :glasmio-core:compileKotlinDesktop :glasmio-core:desktopTest :glasmio-symbols:desktopTest :glasmio-optics:desktopTest :glasmio-motion:desktopTest :glasmio-components:desktopTest :glasmio-backdrop:desktopTest :desktop-sample:compileKotlin --console=plain
       - name: Guard against Material on all platforms
         run: python3 scripts/check_no_material.py
       - name: Guard KMP source boundaries

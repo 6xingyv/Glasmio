@@ -2,10 +2,17 @@ package io.github.neoruaa.glasmio.backdrop
 
 import androidx.compose.foundation.background
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.Outline
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.LayoutDirection
+import com.mocharealm.gaze.capsule.ContinuousRoundedRectangle
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -21,6 +28,24 @@ import com.mocharealm.gaze.glassy.liquid.effect.backdrops.rememberLayerBackdrop
 import com.mocharealm.gaze.glassy.liquid.effect.drawBackdrop
 import com.mocharealm.gaze.glassy.liquid.effect.effects.blur
 import com.mocharealm.gaze.glassy.liquid.effect.effects.lens
+
+/**
+ * Gaze Glassy's general-purpose renderer optimizes every CornerBasedShape as
+ * a circular rounded rectangle. A G2 capsule is a CornerBasedShape as an API,
+ * but its contour is *not* circular. Wrapping only G2 shapes forces SDF
+ * sampling of the real superelliptic outline and its actual normal field.
+ */
+@Immutable
+internal data class G2SignedDistanceShape(private val shape: Shape) : Shape {
+    override fun createOutline(
+        size: Size,
+        layoutDirection: LayoutDirection,
+        density: Density,
+    ): Outline = shape.createOutline(size, layoutDirection, density)
+}
+
+internal fun signedDistanceShape(shape: Shape): Shape =
+    if (shape is ContinuousRoundedRectangle) G2SignedDistanceShape(shape) else shape
 
 /**
  * Capture the content BEHIND a glass control once, so Skiko can sample it on
@@ -53,6 +78,7 @@ fun Modifier.glasmioLiquidGlass(
     val appearance = LocalGlassAppearance.current
     val density = LocalDensity.current
     val surfaceShape = shape ?: LocalGlasmioShapes.current.medium
+    val opticalShape = remember(surfaceShape) { signedDistanceShape(surfaceShape) }
     val geometry = navigationGlassGeometryProfile(
         minimumDimension = sampleMinimumDimension.value,
         material = material,
@@ -63,7 +89,7 @@ fun Modifier.glasmioLiquidGlass(
         val fills = material.fills(colors.isDark)
         this.drawBackdrop(
             backdrop = backdrop,
-            shape = { surfaceShape },
+            shape = { opticalShape },
             effects = {
                 // Blur inside the sampled layer, then refract its output; the edge
                 // remains defined by the same G2 shape on every target.
