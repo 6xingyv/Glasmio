@@ -121,9 +121,9 @@ tasks.register("verifyNoMaterialDependencies") {
             }.forEach { configuration ->
                 configuration.incoming.resolutionResult.allComponents.forEach { component ->
                     val module = component.moduleVersion ?: return@forEach
-                    if (module.group == "androidx.compose.material" ||
-                        module.group == "androidx.compose.material3" ||
-                        module.group.startsWith("org.jetbrains.compose.material")
+                    if (module.group.startsWith("androidx.compose.material") ||
+                        module.group.startsWith("org.jetbrains.compose.material") ||
+                        module.group == "com.google.android.material"
                     ) {
                         forbidden += "${dependencyProject.path}:${configuration.name}: ${module.group}:${module.name}:${module.version}"
                     }
