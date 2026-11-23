@@ -123,3 +123,15 @@ UI toolkit dependencies from silently returning. This check requires a real Grad
 resolution on CI and is not yet reported as passing.
 
 Cross-platform foundation tests now assert native typography metrics, shared G2 generic outlines and identical Android/Desktop vector fallback identities. These are source-level assertions until Gradle CI successfully executes them; a green build is still required for merger readiness.
+
+## Navigation3 UI isolation
+
+Navigation3 `navigation3-ui:1.2.0` is retained solely for its scene rendering
+and metadata model. Miuix UI artifacts have been removed, and the
+`NavDisplayTransitionEffects` extension has been replaced with
+`GlasmioNavDisplayTransitionEffects`, defined in this repository. The
+Navigation3 UI dependency explicitly excludes transitive Material/Material3.
+Only the custom `GlasmioNavDisplay` renders scenes; the stock material-themed
+NavDisplay composable is not used by the sample. This must still pass on-device
+predictive-back regression tests before merging, to detect any accidental
+runtime references to excluded classes.

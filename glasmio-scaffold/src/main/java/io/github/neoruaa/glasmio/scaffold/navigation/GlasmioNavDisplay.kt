@@ -140,7 +140,7 @@ fun <T : Any> GlasmioNavDisplay(
     predictivePopTransitionSpec:
     AnimatedContentTransitionScope<Scene<T>>.(@NavigationEvent.SwipeEdge Int) -> ContentTransform =
         iosPredictivePopTransitionSpec(LocalLayoutDirection.current, LocalDensity.current.density),
-    transitionEffects: NavDisplayTransitionEffects = IosNavigationTransitionEffects,
+    transitionEffects: GlasmioNavDisplayTransitionEffects = IosNavigationTransitionEffects,
     swipeBackEnabled: Boolean = true,
     entryProvider: (key: T) -> NavEntry<T>,
 ) {
@@ -230,7 +230,7 @@ private fun <T : Any> GlasmioNavDisplay(
     predictivePopTransitionSpec:
     AnimatedContentTransitionScope<Scene<T>>.(@NavigationEvent.SwipeEdge Int) -> ContentTransform =
         iosPredictivePopTransitionSpec(LocalLayoutDirection.current, LocalDensity.current.density),
-    transitionEffects: NavDisplayTransitionEffects = IosNavigationTransitionEffects,
+    transitionEffects: GlasmioNavDisplayTransitionEffects = IosNavigationTransitionEffects,
     swipeBackEnabled: Boolean,
     onBack: () -> Unit,
 ) {
@@ -305,7 +305,7 @@ fun <T : Any> GlasmioNavDisplay(
     predictivePopTransitionSpec:
     AnimatedContentTransitionScope<Scene<T>>.(@NavigationEvent.SwipeEdge Int) -> ContentTransform =
         iosPredictivePopTransitionSpec(LocalLayoutDirection.current, LocalDensity.current.density),
-    transitionEffects: NavDisplayTransitionEffects = IosNavigationTransitionEffects,
+    transitionEffects: GlasmioNavDisplayTransitionEffects = IosNavigationTransitionEffects,
     swipeBackEnabled: Boolean = true,
     onBack: (() -> Unit)? = null,
 ) {

@@ -12,6 +12,10 @@ dependencies {
     api(project(":glasmio-ui"))
     api("androidx.navigation3:navigation3-runtime:1.2.0")
     api("androidx.navigationevent:navigationevent-compose:1.1.2")
-    api("androidx.navigation3:navigation3-ui:1.2.0")
+    api("androidx.navigation3:navigation3-ui:1.2.0") {
+        // Glasmio owns its UI; only Navigation3 scene/metadata infrastructure is used.
+        exclude(group = "androidx.compose.material3")
+        exclude(group = "androidx.compose.material")
+    }
     implementation("androidx.activity:activity-compose:1.13.0")
 }

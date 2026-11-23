@@ -88,7 +88,6 @@ import androidx.navigation3.scene.Scene
 import io.github.neoruaa.glasmio.scaffold.navigation.GlasmioNavDisplay
 import io.github.neoruaa.glasmio.scaffold.navigation.GlasmioNavHeaderMotion
 import androidx.navigation3.ui.NavDisplay
-import androidx.navigation3.ui.NavDisplayTransitionEffects
 import io.github.neoruaa.glasmio.scaffold.navigation.iosTransitionSpec
 import io.github.neoruaa.glasmio.scaffold.navigation.iosPopTransitionSpec
 import io.github.neoruaa.glasmio.scaffold.navigation.iosPredictivePopTransitionSpec
