@@ -80,7 +80,7 @@ import io.github.neoruaa.glasmio.glass.render.highlight.Highlight
 import io.github.neoruaa.glasmio.glass.render.highlight.HighlightStyle
 import io.github.neoruaa.glasmio.glass.render.shadow.InnerShadow
 import io.github.neoruaa.glasmio.glass.render.shadow.Shadow
-import com.kyant.capsule.ContinuousRoundedRectangle
+import com.mocharealm.gaze.capsule.ContinuousRoundedRectangle
 import com.kyant.shapes.Capsule
 import io.github.neoruaa.glasmio.glass.InteractiveHighlight
 import kotlin.math.abs

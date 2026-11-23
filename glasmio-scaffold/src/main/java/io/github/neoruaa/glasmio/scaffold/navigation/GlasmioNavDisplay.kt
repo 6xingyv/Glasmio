@@ -64,7 +64,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import android.view.RoundedCorner
 import androidx.compose.ui.platform.LocalView
-import com.kyant.capsule.AbsoluteContinuousRoundedRectangle
+import com.mocharealm.gaze.capsule.AbsoluteContinuousRoundedRectangle
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.layout.LayoutCoordinates

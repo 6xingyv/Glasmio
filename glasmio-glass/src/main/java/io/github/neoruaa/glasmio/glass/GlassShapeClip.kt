@@ -9,8 +9,8 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.graphics.drawscope.clipRect
-import com.kyant.capsule.Continuity
-import com.kyant.capsule.ContinuousRoundedRectangle
+import com.mocharealm.gaze.capsule.Continuity
+import com.mocharealm.gaze.capsule.ContinuousRoundedRectangle
 
 /**
  * Keep the exact outline but bound path masks to the corners, without an extra saveLayer.

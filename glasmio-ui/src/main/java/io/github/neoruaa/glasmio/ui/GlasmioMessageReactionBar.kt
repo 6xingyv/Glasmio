@@ -68,7 +68,7 @@ import io.github.neoruaa.glasmio.glass.LocalToolbarActionSeparation
 import io.github.neoruaa.glasmio.glass.NavigationGlassMaterial
 import io.github.neoruaa.glasmio.glass.NavigationGlassUnionShape
 import io.github.neoruaa.glasmio.glass.render.Backdrop
-import com.kyant.capsule.ContinuousRoundedRectangle
+import com.mocharealm.gaze.capsule.ContinuousRoundedRectangle
 import kotlin.math.abs
 import kotlin.math.ceil
 import kotlin.math.max

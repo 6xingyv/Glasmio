@@ -93,7 +93,7 @@ import io.github.neoruaa.glasmio.glass.render.effects.vibrancy
 import io.github.neoruaa.glasmio.glass.render.highlight.Highlight
 import io.github.neoruaa.glasmio.glass.render.highlight.HighlightStyle
 import io.github.neoruaa.glasmio.glass.render.shadow.Shadow
-import com.kyant.capsule.ContinuousRoundedRectangle
+import com.mocharealm.gaze.capsule.ContinuousRoundedRectangle
 import com.kyant.shapes.Capsule
 import com.kyant.shapes.RoundedRectangularShape
 import io.github.neoruaa.glasmio.glass.InteractiveHighlight

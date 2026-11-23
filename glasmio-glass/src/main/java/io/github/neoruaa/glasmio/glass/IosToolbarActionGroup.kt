@@ -69,10 +69,10 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
-import com.kyant.capsule.ContinuousRoundedRectangle
-import com.kyant.capsule.core.Point
-import com.kyant.capsule.path.PathSegment
-import com.kyant.capsule.path.toPath
+import com.mocharealm.gaze.capsule.ContinuousRoundedRectangle
+import com.mocharealm.gaze.capsule.core.Point
+import com.mocharealm.gaze.capsule.path.PathSegment
+import com.mocharealm.gaze.capsule.path.toPath
 import com.kyant.shapes.Capsule
 import io.github.neoruaa.glasmio.glass.InteractiveHighlight
 import io.github.neoruaa.glasmio.glass.PressHighlightRenderer
