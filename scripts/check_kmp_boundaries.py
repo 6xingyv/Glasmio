@@ -48,6 +48,17 @@ for name in SHARED_MODULES:
             # Pure Kotlin common modules do not need a platform-specific source set.
             continue
 
+# All Android, Desktop and iOS Glasmio G2 corners share Gaze Capsule.
+# Accidentally importing the original Android-only Kyant Capsule would silently
+# reintroduce two distinct shape implementations and break visual parity.
+for path in ROOT.rglob("*.kt"):
+    if any(part in {".git", ".gradle", "build"} for part in path.parts):
+        continue
+    content = path.read_text(encoding="utf-8")
+    for match in re.finditer(r"^\\s*import\\s+com\\.kyant\\.capsule\\.", content, re.MULTILINE):
+        line = content.count("\\n", 0, match.start()) + 1
+        violations.append(f"{path.relative_to(ROOT)}:{line}: use com.mocharealm.gaze.capsule")
+
 if violations:
     for entry in violations:
         print("KMP boundary violation: " + entry)
