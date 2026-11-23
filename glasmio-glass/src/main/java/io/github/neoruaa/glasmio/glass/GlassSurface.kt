@@ -27,7 +27,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerBasedShape
-import androidx.compose.material3.LocalContentColor
+import io.github.neoruaa.glasmio.core.LocalGlasmioContentColor as LocalContentColor
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -93,7 +93,7 @@ import io.github.neoruaa.glasmio.glass.render.effects.vibrancy
 import io.github.neoruaa.glasmio.glass.render.highlight.Highlight
 import io.github.neoruaa.glasmio.glass.render.highlight.HighlightStyle
 import io.github.neoruaa.glasmio.glass.render.shadow.Shadow
-import com.kyant.capsule.ContinuousRoundedRectangle
+import com.mocharealm.gaze.capsule.ContinuousRoundedRectangle
 import com.kyant.shapes.Capsule
 import com.kyant.shapes.RoundedRectangularShape
 import io.github.neoruaa.glasmio.glass.InteractiveHighlight

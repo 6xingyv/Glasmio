@@ -35,9 +35,8 @@ import androidx.compose.foundation.text.contextmenu.data.TextContextMenuSession
 import androidx.compose.foundation.text.contextmenu.provider.LocalTextContextMenuToolbarProvider
 import androidx.compose.foundation.text.contextmenu.provider.TextContextMenuDataProvider
 import androidx.compose.foundation.text.contextmenu.provider.TextContextMenuProvider
-import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import io.github.neoruaa.glasmio.core.LocalGlasmioContentColor as LocalContentColor
+import io.github.neoruaa.glasmio.core.GlasmioText as Text
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -116,7 +115,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.lerp
 import io.github.neoruaa.glasmio.glass.render.backdrops.emptyBackdrop
-import com.kyant.capsule.ContinuousRoundedRectangle
+import com.mocharealm.gaze.capsule.ContinuousRoundedRectangle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.neoruaa.glasmio.core.GlasmioTheme
 import io.github.neoruaa.glasmio.core.GlassColors
@@ -4368,7 +4367,7 @@ half4 main(half4 src, half4 dst) {
             val lateScale = remember { { 1f } }
             val density = LocalDensity.current
             CompositionLocalProvider(LocalGlassColors provides colors, LocalLiquidTabScale provides sourceScale) {
-                MaterialTheme {
+                GlasmioTheme {
                     Row {
                         listOf(false, true).forEachIndexed { index, optimized ->
                             if (index > 0) Spacer(Modifier.width(16.dp))

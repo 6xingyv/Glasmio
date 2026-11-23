@@ -13,10 +13,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import io.github.neoruaa.glasmio.core.LocalGlasmioContentColor as LocalContentColor
+import io.github.neoruaa.glasmio.core.GlasmioText as Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,6 +47,8 @@ import androidx.compose.ui.unit.sp
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.neoruaa.glasmio.core.GlasmioTheme
+import io.github.neoruaa.glasmio.core.IosTextStyle
+import io.github.neoruaa.glasmio.core.IosTypography
 import io.github.neoruaa.glasmio.core.GlassAppearance
 import io.github.neoruaa.glasmio.core.LocalGlassColors
 import io.github.neoruaa.glasmio.glass.GlassEmphasis
@@ -1251,20 +1251,20 @@ class ComponentBehaviorTest {
     @Test fun popUpButtonInheritsHostTypographyChanges() {
         var updatedTypography by mutableStateOf(false)
         content {
-            val hostTypography = MaterialTheme.typography
+            val hostTypography = GlasmioTheme.typography
             GlasmioTheme(
-                typography = hostTypography.copy(
-                    bodyLarge = hostTypography.bodyLarge.copy(
+                typography = hostTypography.mapStyles { role, _, style ->
+                    if (role == IosTextStyle.Body) style.copy(
                         fontSize = if (updatedTypography) 21.sp else 17.sp,
                         lineHeight = if (updatedTypography) 28.sp else 22.sp,
                         fontWeight = if (updatedTypography) FontWeight.Medium else FontWeight.Normal,
                         letterSpacing = if (updatedTypography) 1.5.sp else 0.5.sp,
                         fontFamily = FontFamily.Monospace,
-                    ),
-                ),
+                    ) else style
+                },
                 appearance = GlassAppearance(reduceTransparency = true),
             ) {
-                Text("Body sample", style = MaterialTheme.typography.bodyLarge)
+                Text("Body sample", style = IosTypography.body)
                 GlasmioPopUpButton("Default", listOf("Default", "Recent"), {}, { it })
             }
         }

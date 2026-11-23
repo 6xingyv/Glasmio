@@ -64,7 +64,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import android.view.RoundedCorner
 import androidx.compose.ui.platform.LocalView
-import com.kyant.capsule.AbsoluteContinuousRoundedRectangle
+import com.mocharealm.gaze.capsule.AbsoluteContinuousRoundedRectangle
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.layout.LayoutCoordinates
@@ -140,7 +140,7 @@ fun <T : Any> GlasmioNavDisplay(
     predictivePopTransitionSpec:
     AnimatedContentTransitionScope<Scene<T>>.(@NavigationEvent.SwipeEdge Int) -> ContentTransform =
         iosPredictivePopTransitionSpec(LocalLayoutDirection.current, LocalDensity.current.density),
-    transitionEffects: NavDisplayTransitionEffects = IosNavigationTransitionEffects,
+    transitionEffects: GlasmioNavDisplayTransitionEffects = IosNavigationTransitionEffects,
     swipeBackEnabled: Boolean = true,
     entryProvider: (key: T) -> NavEntry<T>,
 ) {
@@ -230,7 +230,7 @@ private fun <T : Any> GlasmioNavDisplay(
     predictivePopTransitionSpec:
     AnimatedContentTransitionScope<Scene<T>>.(@NavigationEvent.SwipeEdge Int) -> ContentTransform =
         iosPredictivePopTransitionSpec(LocalLayoutDirection.current, LocalDensity.current.density),
-    transitionEffects: NavDisplayTransitionEffects = IosNavigationTransitionEffects,
+    transitionEffects: GlasmioNavDisplayTransitionEffects = IosNavigationTransitionEffects,
     swipeBackEnabled: Boolean,
     onBack: () -> Unit,
 ) {
@@ -305,7 +305,7 @@ fun <T : Any> GlasmioNavDisplay(
     predictivePopTransitionSpec:
     AnimatedContentTransitionScope<Scene<T>>.(@NavigationEvent.SwipeEdge Int) -> ContentTransform =
         iosPredictivePopTransitionSpec(LocalLayoutDirection.current, LocalDensity.current.density),
-    transitionEffects: NavDisplayTransitionEffects = IosNavigationTransitionEffects,
+    transitionEffects: GlasmioNavDisplayTransitionEffects = IosNavigationTransitionEffects,
     swipeBackEnabled: Boolean = true,
     onBack: (() -> Unit)? = null,
 ) {

@@ -34,8 +34,8 @@ import androidx.compose.foundation.text.contextmenu.data.TextContextMenuSession
 import androidx.compose.foundation.text.contextmenu.provider.LocalTextContextMenuToolbarProvider
 import androidx.compose.foundation.text.contextmenu.provider.TextContextMenuDataProvider
 import androidx.compose.foundation.text.contextmenu.provider.TextContextMenuProvider
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Text
+import io.github.neoruaa.glasmio.core.GlasmioDivider as HorizontalDivider
+import io.github.neoruaa.glasmio.core.GlasmioText as Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
@@ -77,7 +77,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.github.neoruaa.glasmio.glass.render.Backdrop
-import com.kyant.capsule.ContinuousRoundedRectangle
+import com.mocharealm.gaze.capsule.ContinuousRoundedRectangle
 import io.github.neoruaa.glasmio.core.IosTypography
 import io.github.neoruaa.glasmio.core.GlasmioTheme
 import io.github.neoruaa.glasmio.core.LocalGlassColors

@@ -15,7 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Text
+import io.github.neoruaa.glasmio.core.GlasmioText as Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
@@ -68,7 +68,7 @@ import io.github.neoruaa.glasmio.glass.LocalToolbarActionSeparation
 import io.github.neoruaa.glasmio.glass.NavigationGlassMaterial
 import io.github.neoruaa.glasmio.glass.NavigationGlassUnionShape
 import io.github.neoruaa.glasmio.glass.render.Backdrop
-import com.kyant.capsule.ContinuousRoundedRectangle
+import com.mocharealm.gaze.capsule.ContinuousRoundedRectangle
 import kotlin.math.abs
 import kotlin.math.ceil
 import kotlin.math.max

@@ -5,8 +5,8 @@ import android.graphics.Shader
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.Text
+import io.github.neoruaa.glasmio.core.LocalGlasmioContentColor as LocalContentColor
+import io.github.neoruaa.glasmio.core.GlasmioText as Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier

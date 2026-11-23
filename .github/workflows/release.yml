@@ -31,6 +31,12 @@ jobs:
           MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
         run: python3 scripts/release_bundle.py --check-credentials
+      # KMP artifact graphs differ from six AAR-only publications.
+      # A tagged release must fail before credentials or upload until publishing is migrated.
+      - name: Prevent release with unvalidated KMP artifacts
+        run: |
+          echo "::error::KMP Maven Central packaging is not yet validated (root metadata, Android/JVM/Native variants and legal notices)."
+          exit 1
       - name: Test and stage signed artifacts
         env:
           MAVEN_SIGNING_KEY: ${{ secrets.MAVEN_SIGNING_KEY }}

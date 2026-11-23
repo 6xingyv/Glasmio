@@ -31,8 +31,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import io.github.neoruaa.glasmio.core.GlasmioText as Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
@@ -88,7 +87,7 @@ import io.github.neoruaa.glasmio.glass.render.backdrops.emptyBackdrop
 import io.github.neoruaa.glasmio.glass.render.backdrops.rememberLayerBackdrop
 import io.github.neoruaa.glasmio.glass.render.effects.blur
 import io.github.neoruaa.glasmio.glass.render.shadow.Shadow
-import com.kyant.capsule.ContinuousRoundedRectangle
+import com.mocharealm.gaze.capsule.ContinuousRoundedRectangle
 import com.kyant.shapes.Capsule
 import io.github.neoruaa.glasmio.glass.InteractiveHighlight
 import kotlinx.coroutines.coroutineScope
@@ -969,7 +968,7 @@ fun GlasmioMenuItem(
             )
             subtitle?.let {
                 Text(
-                    it, style = MaterialTheme.typography.bodySmall,
+                    it, style = IosTypography.footnote,
                     maxLines = 1, overflow = TextOverflow.Ellipsis,
                     color = LocalGlassColors.current.secondaryContent,
                 )

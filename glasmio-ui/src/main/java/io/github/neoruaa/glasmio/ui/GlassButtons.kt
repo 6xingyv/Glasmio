@@ -16,9 +16,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ProvideTextStyle
-import androidx.compose.material3.LocalContentColor
+import io.github.neoruaa.glasmio.core.GlasmioProvideTextStyle as ProvideTextStyle
+import io.github.neoruaa.glasmio.core.LocalGlasmioContentColor as LocalContentColor
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -81,7 +80,7 @@ import io.github.neoruaa.glasmio.glass.render.highlight.Highlight
 import io.github.neoruaa.glasmio.glass.render.highlight.HighlightStyle
 import io.github.neoruaa.glasmio.glass.render.shadow.InnerShadow
 import io.github.neoruaa.glasmio.glass.render.shadow.Shadow
-import com.kyant.capsule.ContinuousRoundedRectangle
+import com.mocharealm.gaze.capsule.ContinuousRoundedRectangle
 import com.kyant.shapes.Capsule
 import io.github.neoruaa.glasmio.glass.InteractiveHighlight
 import kotlin.math.abs
@@ -146,7 +145,7 @@ fun GlasmioButton(
         null -> 16.dp
     }
     val explicitTextStyle = size?.let {
-        MaterialTheme.typography.labelLarge.copy(
+        IosTypography.body.copy(
             fontSize = if (it == GlasmioButtonSize.Small) 15.sp else 17.sp,
             lineHeight = 18.sp,
             letterSpacing = GlasmioTheme.letterSpacing(0.sp),

@@ -9,7 +9,7 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.compose.material3.LocalContentColor
+import io.github.neoruaa.glasmio.core.LocalGlasmioContentColor as LocalContentColor
 import androidx.compose.ui.graphics.Color
 import io.github.neoruaa.glasmio.core.GlassAppearance
 import io.github.neoruaa.glasmio.core.GlassColors

@@ -29,9 +29,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.ProvideTextStyle
-import androidx.compose.material3.Text
+import io.github.neoruaa.glasmio.core.LocalGlasmioContentColor as LocalContentColor
+import io.github.neoruaa.glasmio.core.GlasmioProvideTextStyle as ProvideTextStyle
+import io.github.neoruaa.glasmio.core.GlasmioText as Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -64,7 +64,7 @@ import androidx.compose.ui.window.DialogProperties
 import io.github.neoruaa.glasmio.glass.render.Backdrop
 import io.github.neoruaa.glasmio.glass.render.backdrops.emptyBackdrop
 import io.github.neoruaa.glasmio.glass.render.shadow.Shadow
-import com.kyant.capsule.ContinuousRoundedRectangle
+import com.mocharealm.gaze.capsule.ContinuousRoundedRectangle
 import com.kyant.shapes.Capsule
 import io.github.neoruaa.glasmio.glass.InteractiveHighlight
 

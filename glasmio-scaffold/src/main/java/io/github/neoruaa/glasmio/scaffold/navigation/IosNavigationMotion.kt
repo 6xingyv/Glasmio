@@ -17,7 +17,6 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.IntOffset
 import androidx.navigation3.scene.Scene
-import androidx.navigation3.ui.NavDisplayTransitionEffects
 import androidx.navigationevent.NavigationEvent
 import kotlin.math.PI
 import kotlin.math.exp
@@ -78,7 +77,7 @@ internal fun iosNavigationParallaxOffset(widthPixels: Int, density: Float): Int 
     (widthPixels - (widthPixels / density * 0.7f).roundToInt() * density).roundToInt()
 
 /** Native slide navigation with the window corner mask and native ten-percent dimming. */
-val IosNavigationTransitionEffects = NavDisplayTransitionEffects(
+val IosNavigationTransitionEffects = GlasmioNavDisplayTransitionEffects(
     enableCornerClip = true,
     dimAmount = 0.1f,
     blockInputDuringTransition = true,

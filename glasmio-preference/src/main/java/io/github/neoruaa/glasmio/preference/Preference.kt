@@ -14,8 +14,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.material3.ProvideTextStyle
-import androidx.compose.material3.Text
+import io.github.neoruaa.glasmio.core.GlasmioProvideTextStyle as ProvideTextStyle
+import io.github.neoruaa.glasmio.core.GlasmioText as Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

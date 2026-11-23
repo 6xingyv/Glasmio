@@ -33,8 +33,8 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.grid.LazyGridState
-import androidx.compose.material3.Text
-import androidx.compose.material3.LocalContentColor
+import io.github.neoruaa.glasmio.core.GlasmioText as Text
+import io.github.neoruaa.glasmio.core.LocalGlasmioContentColor as LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect

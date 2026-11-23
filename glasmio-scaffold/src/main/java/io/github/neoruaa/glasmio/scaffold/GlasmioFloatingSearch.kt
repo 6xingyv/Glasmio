@@ -28,7 +28,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.union
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
@@ -234,7 +233,7 @@ fun GlasmioFloatingSearch(
             AnimatedVisibility(visible = active, enter = fadeIn(), exit = fadeOut()) {
                 Box(
                     Modifier.fillMaxSize().background(
-                        if (query.text.isEmpty()) Color.Transparent else MaterialTheme.colorScheme.background,
+                        if (query.text.isEmpty()) Color.Transparent else io.github.neoruaa.glasmio.core.LocalGlassColors.current.groupedBackground,
                     ),
                 ) {
                     if (query.text.isNotEmpty()) results(resultsPadding)
