@@ -38,6 +38,7 @@ kotlin {
         desktopMain.dependencies {
             implementation(project(":glasmio-symbols"))
         }
+        iosMain.dependencies { implementation(project(":glasmio-backdrop")) }
         commonTest.dependencies { implementation(kotlin("test")) }
     }
 }

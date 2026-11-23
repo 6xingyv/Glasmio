@@ -172,3 +172,5 @@ and pixel-difference tests before claiming full visual parity. The module is
 not yet included in the Maven Central release configuration. The Desktop
 sample is its first integration point. The dependency must be resolved in CI
 and any platform-specific AGSL/SkSL issues corrected there before merging.
+
+The iOS UIKit preview now uses the same GPU-backed `glasmio-backdrop` surface as Desktop (through an `iosMain` dependency in `glasmio-components`), with a genuine recorded background and Clear material refraction. This makes the shared optical backend executable from the generated SwiftUI view controller rather than a parameters-only demonstration.
