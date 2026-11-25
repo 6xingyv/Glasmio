@@ -728,6 +728,7 @@ internal fun Modifier.navigationGlassBackgroundResolved(
     overlayColor: Color = Color.Transparent,
     fusePressOverlayIntoCompletion: Boolean = false,
     shadowMaterial: NavigationGlassMaterial? = material,
+    backdropSamplingScale: Float? = null,
 ): Modifier {
     val nativeRecipe = if (isRuntimeShaderSupported() && navigationMaterial && innerShadows != null && surfaceOverlay == null &&
         sampleBackdrop && appearance.usesBackdrop) {
@@ -981,6 +982,9 @@ fun GlassSurface(
     material: NavigationGlassMaterial? = null,
     frostRadius: Dp? = null,
     preserveBackdropColors: Boolean = false,
+    observeChildPress: Boolean = false,
+    pressInteraction: InteractiveHighlight? = null,
+    backdropSamplingScale: Float? = null,
     content: @Composable BoxScope.() -> Unit,
 ) {
     val colors = LocalGlassColors.current
@@ -1003,7 +1007,7 @@ fun GlassSurface(
     val navigationFlexSize = remember(nativeNavigationFlex) {
         if (nativeNavigationFlex) mutableStateOf(Size.Zero) else null
     }
-    val interactiveHighlight = remember(animationScope, navigationFlexSize, density) {
+    val interactiveHighlight = pressInteraction ?: remember(animationScope, navigationFlexSize, density) {
         InteractiveHighlight(animationScope = animationScope).apply {
             pressAnimationSpec = navigationFlexSize?.let { measuredSize ->
                 { pressed ->
@@ -1191,6 +1195,7 @@ fun GlassSurface(
             inheritedLuminance,
             adaptive,
             materialDarkFraction,
+            backdropSamplingScale,
         ) {
             Modifier.navigationGlassBackgroundResolved(
                 backdrop = surfaceBackdrop,
@@ -1219,6 +1224,7 @@ fun GlassSurface(
                 materialTint = navigationSurfaceColor.takeIf { emphasis == GlassEmphasis.Regular },
                 blurRadius = frostRadius ?: Dp.Unspecified,
                 preserveBackdropColors = preserveBackdropColors,
+                backdropSamplingScale = backdropSamplingScale,
                 prominentTint = containerColor.copy(alpha = 1f).takeIf { emphasis == GlassEmphasis.Prominent },
                 luminanceState = luminance.takeIf { adaptive && inheritedLuminance == null },
                 sampledPressHighlight = { size ->
@@ -1288,7 +1294,8 @@ fun GlassSurface(
                 .then(
                     if (sharesToolbarSurface || sharesContactSurface) Modifier
                     else if (pressHighlight != null) externalHighlightModifier
-                    else if (onClick != null && enabled) interactiveHighlight.modifier else Modifier,
+                    else if ((onClick != null || observeChildPress || pressInteraction != null) && enabled)
+                        interactiveHighlight.modifier else Modifier,
                 )
                 .then(
                     if (onClick != null) {
@@ -1307,9 +1314,8 @@ fun GlassSurface(
                             onClick = onClick,
                         )
                         click.then(if (enabled) interactiveHighlight.gestureModifier else Modifier)
-                    } else {
-                        Modifier
-                    },
+                    } else if (observeChildPress && enabled) interactiveHighlight.gestureModifier
+                    else Modifier,
                 )
                 .then(if (toolbarMember != null && !sharesToolbarSurface) {
                     Modifier.drawWithContent { toolbarMember.drawForeground(this) }
